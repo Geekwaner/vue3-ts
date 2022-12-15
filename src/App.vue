@@ -14,4 +14,11 @@ getList();
   <h1>Hello vue3 + ts👍</h1>
 </template>
 
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+@import '@/assets/styles/variables.less';
+@import '@/assets/styles/mixins.less';
+h1 {
+  background-color: @sucColor;
+  .hoverShadow ();
+}
+</style>
