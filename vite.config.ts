@@ -12,4 +12,15 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
   },
+  css: {
+    // https://cn.vitejs.dev/config/#css-preprocessoroptions
+    preprocessorOptions: {
+      less: {
+        additionalData: `
+              @import "@/assets/styles/variables.less";
+              @import "@/assets/styles/mixins.less";
+            `,
+      },
+    },
+  },
 });
