@@ -1,12 +1,28 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+// ctrl + p 可以在 vscode 通过文件名定位到文件
+
+import { useHomeStore } from '@/store';
+
+// 发送了3个相同的请求，其实没影响，我们封装组件，一定要保证组件功能的完整性
+const home = useHomeStore();
+
+home.getAllCategory();
+</script>
 
 <template>
   <div class="home-category">
     <ul class="menu">
-      <li v-for="item in 9" :key="item">
-        <RouterLink to="/">{{ '居家' }}</RouterLink>
-        <RouterLink to="/">{{ '茶咖酒具' }}</RouterLink>
-        <RouterLink to="/">{{ '水具杯壶' }}</RouterLink>
+      <li v-for="item in home.categoryList" :key="item.id">
+        <RouterLink to="/">{{ item.name }}</RouterLink>
+        <!-- 二级分类 -->
+        <!--
+          1. 可选链操作符
+          2. 判断也行
+         -->
+        <RouterLink to="/" v-if="item.children[0]">{{
+          item.children[0].name
+        }}</RouterLink>
+        <RouterLink to="/">{{ item.children?.[1]?.name }}</RouterLink>
         <!-- 弹层layer位置 -->
       </li>
     </ul>
