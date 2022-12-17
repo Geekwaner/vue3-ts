@@ -1,22 +1,16 @@
-<script setup lang="ts">
-import instance from './utils/request';
-
-const getList = async () => {
-  const res = await instance.request({
-    url: '/home/index',
-  });
-  console.log('res -----> ', res);
-};
-getList();
-</script>
+<script setup lang="ts"></script>
 
 <template>
-  <h1>Hello vue3 + ts👍</h1>
+  <ul>
+    <li>
+      <RouterLink to="/">首页</RouterLink>
+    </li>
+    <li>
+      <RouterLink to="/login">登录页</RouterLink>
+    </li>
+  </ul>
+  <!-- 觉得放出路由出口 -->
+  <RouterView></RouterView>
 </template>
 
-<style lang="less" scoped>
-h1 {
-  background-color: @sucColor;
-  .hoverShadow ();
-}
-</style>
+<style lang="less" scoped></style>
