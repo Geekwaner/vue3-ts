@@ -1,9 +1,26 @@
 <script setup lang="ts">
+import { ref, onMounted, onUnmounted } from 'vue';
 import AppHeaderNav from './app-header-nav.vue';
+const isShow = ref(false);
+
+const fn = () => {
+  // document.documentElement 获取到 html 元素，拿到他的滚动高度即可
+  const top = document.documentElement.scrollTop;
+  isShow.value = top >= 78;
+  console.log('top -----> ', top);
+};
+
+onMounted(() => {
+  window.addEventListener('scroll', fn);
+});
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', fn);
+});
 </script>
 
 <template>
-  <div class="app-header-sticky" :class="{ show: true }">
+  <div class="app-header-sticky" :class="{ show: isShow }">
     <div class="container">
       <RouterLink class="logo" to="/" />
       <AppHeaderNav />
