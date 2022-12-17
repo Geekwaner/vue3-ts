@@ -5,11 +5,12 @@ import 'normalize.css';
 
 import '@/assets/styles/common.less';
 import router from './router';
+import XtxUI from './components/XtxUI';
 
 const pinia = createPinia();
 
 const app = createApp(App);
-
+app.use(XtxUI);
 app.use(router);
 app.use(pinia);
 

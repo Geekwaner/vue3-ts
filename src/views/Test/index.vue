@@ -11,7 +11,7 @@
 // import Skeleton from '../../components/XtxUI/Skeleton/Skeleton.vue';
 
 // 2. 通过index.ts统一管理所有组件，通过import{组件1，组件2}使用
-import { XtxButton, XtxSkeleton } from '@/components/XtxUI';
+// import { XtxButton, XtxSkeleton } from '@/components/XtxUI';
 </script>
 
 <template>
