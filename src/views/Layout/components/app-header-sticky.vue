@@ -1,26 +1,12 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue';
 import AppHeaderNav from './app-header-nav.vue';
-const isShow = ref(false);
 
-const fn = () => {
-  // document.documentElement 获取到 html 元素，拿到他的滚动高度即可
-  const top = document.documentElement.scrollTop;
-  isShow.value = top >= 78;
-  console.log('top -----> ', top);
-};
-
-onMounted(() => {
-  window.addEventListener('scroll', fn);
-});
-
-onUnmounted(() => {
-  window.removeEventListener('scroll', fn);
-});
+import { useWindowScroll } from '@vueuse/core';
+const { y } = useWindowScroll();
 </script>
 
 <template>
-  <div class="app-header-sticky" :class="{ show: isShow }">
+  <div class="app-header-sticky" :class="{ show: y >= 78 }">
     <div class="container">
       <RouterLink class="logo" to="/" />
       <AppHeaderNav />
