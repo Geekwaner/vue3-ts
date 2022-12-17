@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { type Method } from 'axios';
 
 // 创建 axios 实例
 const instance = axios.create({
@@ -35,8 +35,13 @@ instance.interceptors.response.use(
  * @param url  请求地址
  * @param submitData  对象类型，提交数据
  */
-export const http = (method, url, submitObject) => {
-  return instance.request({
+export const http = <T>(method: Method, url: string, submitObject?: object) => {
+  return instance.request<{
+    code: string;
+    msg: string;
+    // 不能写死，因为每个请求返回的数据类型都不一样
+    result: T;
+  }>({
     method,
     url,
     /*

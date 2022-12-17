@@ -21,17 +21,9 @@ export const useHomeStore = defineStore('home', {
         2. 做 http 的封装
         3. 简化 传递的类型，其实也就是 result 的类型不确定而已
       */
-      const res = await instance.request<{
-        code: string;
-        msg: string;
-        result: CategoryList;
-      }>({ url: '/home/category/head' });
 
       // 引进http请求，页面调用就简单的多了
-      const resHttp = await http('get', '/home/category/head', {});
-
-      console.log('resHttp -----> ', resHttp);
-
+      const res = await http<CategoryList>('get', '/home/category/head');
       this.categoryList = res.data.result;
     },
   },
