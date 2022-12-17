@@ -12,6 +12,10 @@ import AppHeaderSticky from './components/app-header-sticky.vue';
   <AppHeader />
   <!-- 模块2：顶部吸顶 -->
   <AppHeaderSticky></AppHeaderSticky>
+
+  <!-- 一定要放出路由出口，并且写在这里 -->
+  <RouterView></RouterView>
+
   <!-- 模块3：页面底部 -->
   <AppFooter />
 </template>
