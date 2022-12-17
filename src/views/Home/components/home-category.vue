@@ -19,10 +19,19 @@ home.getAllCategory();
           1. 可选链操作符
           2. 判断也行
          -->
-        <RouterLink to="/" v-if="item.children[0]">{{
+        <!-- <RouterLink to="/" v-if="item.children[0]">{{
           item.children[0].name
         }}</RouterLink>
-        <RouterLink to="/">{{ item.children?.[1]?.name }}</RouterLink>
+        <RouterLink to="/">{{ item.children?.[1]?.name }}</RouterLink> -->
+        <!--
+          vue3 中， v-if 的优先级，会比 v-for 更高
+          vue2 中， vfor 的优先级，会比 v-if 更高
+          无论在 vue2 或者 vue3，都不建议写在一起
+          使用 template，可以理解为空标签，不会生成真正的dom，常用于 v-if/v-for，v-slot 渲染
+         -->
+        <template v-for="(item2, index) in item.children" :key="item2.id">
+          <RouterLink to="/" v-if="index < 2">{{ item2.name }}</RouterLink>
+        </template>
         <!-- 弹层layer位置 -->
       </li>
     </ul>
