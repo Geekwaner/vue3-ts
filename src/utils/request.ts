@@ -29,4 +29,22 @@ instance.interceptors.response.use(
   }
 );
 
+/**
+ * axios 二次封装，整合 TS 类型
+ * @param method  请求类型
+ * @param url  请求地址
+ * @param submitData  对象类型，提交数据
+ */
+export const http = (method, url, submitObject) => {
+  return instance.request({
+    method,
+    url,
+    /*
+      get 请求，使用字段是 params
+      其他请求，使用字段是 data
+    */
+    [method.toUpperCase() === 'GET' ? 'params' : 'data']: submitObject,
+  });
+};
+
 export default instance;
