@@ -5,18 +5,18 @@
 </template>
 
 <script setup lang="ts">
-import type { PropType } from "vue";
+import type { PropType } from 'vue';
 
 defineProps({
   // 控制按钮大小 size: large middle small mini
   size: {
-    type: String as PropType<"large" | "middle" | "small" | "mini">,
-    default: "middle",
+    type: String as PropType<'large' | 'middle' | 'small' | 'mini'>,
+    default: 'middle',
   },
   // 控制按钮类型 type: primary plain gray
   type: {
-    type: String as PropType<"primary" | "plain" | "gray">,
-    default: "default",
+    type: String as PropType<'primary' | 'plain' | 'gray'>,
+    default: 'default',
   },
 });
 </script>

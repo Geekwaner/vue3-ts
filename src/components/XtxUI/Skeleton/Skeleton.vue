@@ -24,7 +24,7 @@ defineProps({
   // 背景颜色定制
   bg: {
     type: String,
-    default: "#ccc",
+    default: '#ccc',
   },
 });
 </script>
@@ -43,7 +43,7 @@ defineProps({
 }
 .shan {
   &::after {
-    content: "";
+    content: '';
     position: absolute;
     animation: shan 1.5s ease 0s infinite;
     top: 0;
