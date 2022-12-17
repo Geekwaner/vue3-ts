@@ -2,7 +2,8 @@
 import { useHomeStore } from '@/store';
 
 const home = useHomeStore();
-console.log('home.m -----> ', home.money);
+// console.log('home.m -----> ', home.money);
+home.getAllCategory();
 </script>
 
 <template>
