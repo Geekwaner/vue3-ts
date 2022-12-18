@@ -1,27 +1,40 @@
 <script setup lang="ts">
+import { useIntersectionObserver } from '@vueuse/core';
+import { ref } from 'vue';
+
 /*
-使用组件的三种方式：
-1. 单个组件导入+使用(每个页面需要使用，都要引入)
-2. 通过index.ts统一管理所有组件，通过import{组件1，组件2}使用
-3. 通过app.use()全局注册使用(最简洁，目前所有ui库都这么实现)
+获取dom元素
+1. 定义空 变量
+2. 把变量 通过 ref 属性和 dom 关联起来
+3. 页面渲染完之后，就可以使用了
 */
+const target = ref(null);
 
-// 1. 单个组件导入+使用
-// import Button from '../../components/XtxUI/Button/index.vue';
-// import Skeleton from '../../components/XtxUI/Skeleton/Skeleton.vue';
+// 🔔核心单词解释：
+//   useIntersectionObserver   检查元素是否进入可视区函数
+//   target                    目标元素，🎯需配合模板 ref 使用
+//   isIntersecting            是否进入可视区(布尔值)
+//   stop                      用于停止检测的函数
 
-// 2. 通过index.ts统一管理所有组件，通过import{组件1，组件2}使用
-// import { XtxButton, XtxSkeleton } from '@/components/XtxUI';
+// 官网基本案例，供同学练习复制
+const { stop } = useIntersectionObserver(target, ([{ isIntersecting }]) => {
+  // 写业务代码
+  console.log('isIntersecting目标是否进入可视区 -----> ', isIntersecting);
+  if (isIntersecting) {
+    console.log('目标进入了可视区，停止监听 ');
+    // 实现业务代码
+    stop();
+  }
+});
 </script>
 
 <template>
-  <h1>我是测试页面👍</h1>
-  <!-- <Button size="large" type="primary">按钮</Button>
-  <Button size="middle" type="gray">按钮</Button>
-  <Skeleton></Skeleton>
-  <Skeleton :width="200" :height="180" bg="pink"></Skeleton> -->
-  <XtxButton size="middle" type="gray">按钮</XtxButton>
-  <XtxSkeleton :width="200" :height="180" bg="pink"></XtxSkeleton>
+  <div style="height: 2000px"></div>
+  <!-- 🎯目标元素需添加模板 ref  -->
+  <div ref="target">
+    <h1>🎯我是目标元素🎯</h1>
+  </div>
+  <div style="height: 2000px"></div>
 </template>
 
 <style lang="less" scoped></style>
