@@ -39,3 +39,15 @@ export interface Banner {
 }
 
 export type BannerList = Banner[];
+
+export interface Goods {
+  id: string;
+  name: string;
+  desc: string;
+  price: string;
+  picture: string;
+  discount?: any;
+  orderNum: number;
+}
+
+export type GoodsList = Goods[];

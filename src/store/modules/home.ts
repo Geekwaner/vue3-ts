@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import instance, { http } from '@/utils/request';
-import type { BannerList, CategoryList } from '@/types';
+import type { BannerList, CategoryList, GoodsList } from '@/types';
 
 // types 存放 ts 类型声明的文件夹
 export const useHomeStore = defineStore('home', {
@@ -9,6 +9,7 @@ export const useHomeStore = defineStore('home', {
     return {
       categoryList: [] as CategoryList,
       bannerList: [] as BannerList,
+      newGoodsList: [] as GoodsList,
     };
   },
   // 相当于 vue2 中的 methods
@@ -31,6 +32,12 @@ export const useHomeStore = defineStore('home', {
     async getBannerList() {
       const res = await http<BannerList>('get', '/home/banner');
       this.bannerList = res.data.result;
+    },
+
+    // 获取新鲜好物数据
+    async getNewGoodsList() {
+      const res = await http<GoodsList>('get', '/home/new', { limit: 4 });
+      this.newGoodsList = res.data.result;
     },
   },
 });
