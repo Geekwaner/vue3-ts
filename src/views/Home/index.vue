@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import HomeBanner from './components/home-banner.vue';
 import HomeCategory from './components/home-category.vue';
-import HomePanel from './components/home-panel.vue';
+import HomeNew from './components/home-new.vue';
 </script>
 
 <template>
@@ -14,12 +14,9 @@ import HomePanel from './components/home-panel.vue';
         <HomeBanner />
       </div>
     </div>
-    <HomePanel title="我是主标题" subTitle="我是副标题">
-      <template #right> 我是右侧插槽 </template>
-      <h1>我是默认插槽</h1>
-      <div>多写几个也没问题</div>
-      <p>默认插槽段落</p>
-    </HomePanel>
+    <!-- 新鲜好物 -->
+    <HomeNew></HomeNew>
+    <!-- 人气推荐 -->
   </div>
 </template>
 
