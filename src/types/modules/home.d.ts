@@ -30,3 +30,12 @@ export interface Category {
 }
 
 export type CategoryList = Category[];
+
+export interface Banner {
+  id: string;
+  imgUrl: string;
+  hrefUrl: string;
+  type: string;
+}
+
+export type BannerList = Banner[];
