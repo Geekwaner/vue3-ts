@@ -1,22 +1,12 @@
 <script setup lang="ts">
+import { useObserver } from '@/hooks';
 import { useHomeStore } from '@/store';
-import { useIntersectionObserver } from '@vueuse/core';
-import { ref } from 'vue';
 import HomePanel from './home-panel.vue';
 const home = useHomeStore();
+// 不要一进来就发请求，要请求懒加载
 // home.getNewGoodsList();
-
-const target = ref(null);
-const { stop } = useIntersectionObserver(target, ([{ isIntersecting }]) => {
-  // 写业务代码
-  console.log('isIntersecting目标是否进入可视区 -----> ', isIntersecting);
-  if (isIntersecting) {
-    console.log('目标进入了可视区，停止监听 ');
-    // 实现业务代码
-    home.getNewGoodsList();
-    stop();
-  }
-});
+// 这里只需要传递方法名就可以，不要调用,类似 document.addEventLister('click',fn)
+const { target } = useObserver(home.getNewGoodsList);
 </script>
 
 <template>
