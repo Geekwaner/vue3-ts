@@ -4,6 +4,8 @@ import type { BannerList, CategoryList, GoodsList } from '@/types';
 
 // types 存放 ts 类型声明的文件夹
 export const useHomeStore = defineStore('home', {
+  // 开启数据本地持久化
+  persist: true,
   // 相当于 vue2 中的 data
   state: () => {
     return {

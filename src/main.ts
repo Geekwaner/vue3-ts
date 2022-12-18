@@ -6,8 +6,11 @@ import 'normalize.css';
 import '@/assets/styles/common.less';
 import router from './router';
 import XtxUI from './components/XtxUI';
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
 
 const pinia = createPinia();
+// 因为是 pinia 的插件，所以在 pinia.use 使用
+pinia.use(piniaPluginPersistedstate);
 
 const app = createApp(App);
 app.use(XtxUI);
