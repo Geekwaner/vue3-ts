@@ -13,6 +13,10 @@ const routes: RouteRecordRaw[] = [
       // 如果使用 / 开头，说明我这个路由就是根路径，不会把父组件的路径添加进来
       // 如果没有 / 开头，就会把父组件的 路径自动添加 ：  path:'test'  ---  '/test'
       { path: '', component: () => import('@/views/Home/index.vue') },
+      {
+        path: '/category/:id',
+        component: () => import('@/views/Category/index.vue'),
+      },
     ],
   },
   {
