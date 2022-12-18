@@ -40,6 +40,10 @@ const router = createRouter({
   // 创建路由模式
   history: createWebHashHistory(),
   routes,
+  // 路由的滚动行为
+  scrollBehavior() {
+    return { top: 0, behavior: 'smooth' };
+  },
 });
 
 export default router;
