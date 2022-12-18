@@ -11,7 +11,7 @@ home.getAllCategory();
 
 <template>
   <div class="home-category">
-    <ul class="menu">
+    <ul class="menu" v-if="home.categoryList.length">
       <li v-for="item in home.categoryList" :key="item.id">
         <RouterLink to="/">{{ item.name }}</RouterLink>
         <!-- 二级分类 -->
@@ -50,6 +50,17 @@ home.getAllCategory();
             </li>
           </ul>
         </div>
+      </li>
+    </ul>
+    <ul class="menu" v-else>
+      <li v-for="item in 9" :key="item">
+        <XtxSkeleton :width="60" :height="30"></XtxSkeleton>
+        <XtxSkeleton
+          :width="40"
+          :height="20"
+          style="margin: 0 10px"
+        ></XtxSkeleton>
+        <XtxSkeleton :width="40" :height="20"></XtxSkeleton>
       </li>
     </ul>
   </div>

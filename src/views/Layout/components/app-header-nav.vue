@@ -11,9 +11,20 @@ home.getAllCategory();
     <li class="home">
       <RouterLink to="/">首页</RouterLink>
     </li>
-    <li v-for="item in home.categoryList" :key="item.id">
-      <a href="#">{{ item.name }}</a>
-    </li>
+    <template v-if="home.categoryList.length">
+      <li v-for="item in home.categoryList" :key="item.id">
+        <a href="#">{{ item.name }}</a>
+      </li>
+    </template>
+    <template v-else>
+      <li v-for="item in 9" :key="item">
+        <XtxSkeleton
+          :width="30"
+          :height="18"
+          style="margin: 10px 0 0 -10px"
+        ></XtxSkeleton>
+      </li>
+    </template>
   </ul>
 </template>
 
