@@ -41,7 +41,12 @@ const router = createRouter({
   history: createWebHashHistory(),
   routes,
   // 路由的滚动行为
-  scrollBehavior() {
+  scrollBehavior(to, from, savedPosition) {
+    // // to 代表是前进到的页面，from 代表是来源页面
+    // console.log('to -----> ', to);
+    // console.log('from -----> ', from);
+    // // 只能 由浏览器的后退/前进按钮触发，才会有 savedPosition
+    // console.log('savedPosition -----> ', savedPosition);
     return { top: 0, behavior: 'smooth' };
   },
 });
