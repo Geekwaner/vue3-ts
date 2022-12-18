@@ -6,6 +6,15 @@ import type { BannerList, CategoryList, GoodsList } from '@/types';
 export const useHomeStore = defineStore('home', {
   // 开启数据本地持久化
   persist: true,
+  // 高级用法，一般用不上
+  // persist: {
+  //   // 🎉按需持久化，默认会存储全部
+  //   paths: ['categoryList', 'bannerList'],
+  //   // 修改存储中使用的键名称，默认为当前 Store的 id
+  //   key: 'bigHome',
+  //   // 修改为 sessionStorage，默认为 localStorage
+  //   storage: window.sessionStorage,
+  // },
   // 相当于 vue2 中的 data
   state: () => {
     return {
