@@ -2,6 +2,9 @@
 // 1. 怎么拿到当前路由对象 ---  useRoute()
 // 2. 怎么拿到当前路由动态参数 --- params
 
+import type { GoodsDetail } from '@/types';
+import { http } from '@/utils/request';
+import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 
 // vue2，通过 this.$route/this.$router获取到
@@ -11,6 +14,14 @@ const route = useRoute();
 // console.log('route -----> ', route);
 const { id } = route.params;
 console.log('id -----> ', id);
+
+// 建议定义时候不写值，否则需要把对象类型的属性都写完全，太费功夫，没必要
+const goodsDetail = ref<GoodsDetail>();
+// 不要再顶层直接使用 await 发请求，可以在 onMounted 里发送
+onMounted(async () => {
+  const res = await http<GoodsDetail>('GET', '/goods', { id });
+  goodsDetail.value = res.data.result;
+});
 </script>
 
 <template>
