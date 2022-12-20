@@ -1,5 +1,16 @@
 <script setup lang="ts">
-//
+// 1. 怎么拿到当前路由对象 ---  useRoute()
+// 2. 怎么拿到当前路由动态参数 --- params
+
+import { useRoute } from 'vue-router';
+
+// vue2，通过 this.$route/this.$router获取到
+// 因为在setup里面，没有 this，需要使用 useRoute()/useRouter()
+
+const route = useRoute();
+// console.log('route -----> ', route);
+const { id } = route.params;
+console.log('id -----> ', id);
 </script>
 
 <template>
