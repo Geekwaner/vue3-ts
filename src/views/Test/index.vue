@@ -1,7 +1,10 @@
 <script setup lang="ts">
+import { ref } from 'vue';
 import MyButton from './MyButton.vue';
 import MyCount from './MyCount.vue';
 //
+
+const modelValue = ref(10);
 </script>
 
 <template>
@@ -12,7 +15,9 @@ import MyCount from './MyCount.vue';
   <hr />
   <br />
 
-  <MyCount></MyCount>
+  <!-- islabel 可以直接传属性名即可 -->
+  <!-- 传数据使用 :modelValue -->
+  <MyCount isLabel :modelValue="modelValue"></MyCount>
 </template>
 
 <style lang="less" scoped></style>

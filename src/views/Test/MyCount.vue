@@ -4,14 +4,20 @@
 //   2. 加号和最大值处理
 //   3. 减号和最小值处理
 //   4. props 默认值处理
+
+// 父组件通过 modelValue 传值，那么子组件接收也是 modelValue
+defineProps<{
+  isLabel: boolean;
+  modelValue: number;
+}>();
 </script>
 
 <template>
   <div class="xtx-numbox">
-    <div class="label">数量</div>
+    <div class="label" v-if="isLabel">数量</div>
     <div class="numbox">
       <a href="javascript:;">-</a>
-      <input type="text" readonly :value="1" />
+      <input type="text" readonly :value="modelValue" />
       <a href="javascript:;">+</a>
     </div>
   </div>
