@@ -5,6 +5,8 @@
 // 3. `defineProps` 定义 Props 接收值
 // 4. 模板中使用父组件传过来的值设置按钮样式
 
+import type { PropType } from 'vue';
+
 // defineProps({
 //   size: {
 //     // vue的类型，需要传递构造器
@@ -23,11 +25,23 @@
 //      1. vite.config.ts   开启响应性语法糖(实验性)，记得重启项目
 //      2. .eslintrc.cjs    关闭检查规则
 // 注意：实验性写法在 启动项目 时会有警告提醒，我们知道自己在干什么，忽略警告即可
-const { size = 'large', type = 'gray' } = defineProps<{
-  // ts 的类型，小写即可
-  size?: 'large' | 'middle' | 'small' | 'mini';
-  type?: 'default' | 'primary' | 'plain' | 'gray';
-}>();
+// const { size = 'large', type = 'gray' } = defineProps<{
+//   // ts 的类型，小写即可
+//   size?: 'large' | 'middle' | 'small' | 'mini';
+//   type?: 'default' | 'primary' | 'plain' | 'gray';
+// }>();
+
+// 写法2 Proptype 写法 - 了解即可
+defineProps({
+  size: {
+    type: String as PropType<'large' | 'middle' | 'small' | 'mini'>,
+    default: 'small',
+  },
+  type: {
+    type: String as PropType<'default' | 'primary' | 'plain' | 'gray'>,
+    default: 'gray',
+  },
+});
 </script>
 
 <template>
