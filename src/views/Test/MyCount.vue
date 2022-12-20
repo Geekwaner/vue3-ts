@@ -6,10 +6,22 @@
 //   4. props 默认值处理
 
 // 父组件通过 modelValue 传值，那么子组件接收也是 modelValue
-defineProps<{
+const { isLabel, modelValue } = defineProps<{
   isLabel: boolean;
   modelValue: number;
 }>();
+
+// emit('update:modelValue',1)
+const emit = defineEmits<{
+  (event: 'update:modelValue', val: number): void;
+}>();
+
+const add = () => {
+  // 最大值处理
+  if (modelValue + 1 > 15) return;
+  // 没有超过最大值就调用 父组件的方法实现+1
+  emit('update:modelValue', modelValue + 1);
+};
 </script>
 
 <template>
@@ -18,7 +30,7 @@ defineProps<{
     <div class="numbox">
       <a href="javascript:;">-</a>
       <input type="text" readonly :value="modelValue" />
-      <a href="javascript:;">+</a>
+      <a href="javascript:;" @click="add">+</a>
     </div>
   </div>
 </template>

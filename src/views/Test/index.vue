@@ -16,8 +16,12 @@ const modelValue = ref(10);
   <br />
 
   <!-- islabel 可以直接传属性名即可 -->
-  <!-- 传数据使用 :modelValue -->
-  <MyCount isLabel :modelValue="modelValue"></MyCount>
+  <!-- 传数据使用 :modelValue，传方法使用 @update:modelValue -->
+  <MyCount
+    isLabel
+    :modelValue="modelValue"
+    @update:modelValue="(val:number)=>modelValue = val"
+  ></MyCount>
 </template>
 
 <style lang="less" scoped></style>
