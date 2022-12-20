@@ -6,7 +6,13 @@ import vueJsx from '@vitejs/plugin-vue-jsx';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [vue(), vueJsx()],
+  plugins: [
+    // 需要主动开启响应式语法糖的属性
+    vue({
+      reactivityTransform: true,
+    }),
+    vueJsx(),
+  ],
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),

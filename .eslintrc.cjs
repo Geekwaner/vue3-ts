@@ -7,6 +7,8 @@ module.exports = {
   rules: {
     // vue组件必须用组合词: 关闭
     'vue/multi-word-component-names': 'off',
+    // vue不允许解构赋值： 关闭
+    'vue/no-setup-props-destructure': 'off',
   },
   extends: [
     'plugin:vue/vue3-essential',
