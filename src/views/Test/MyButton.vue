@@ -4,10 +4,17 @@
 // 2. 分析按钮组件的自定义属性
 // 3. `defineProps` 定义 Props 接收值
 // 4. 模板中使用父组件传过来的值设置按钮样式
+
+// 1. vite.config 开启响应式语法糖
+// 2. eslint 关闭禁止解构赋值规则
+const { size = 'middle', type = 'primary' } = defineProps<{
+  size?: 'large' | 'middle' | 'small' | 'mini';
+  type?: 'default' | 'primary' | 'plain' | 'gray';
+}>();
 </script>
 
 <template>
-  <button class="xtx-button ellipsis" :class="`middle default`">
+  <button class="xtx-button ellipsis" :class="`${size} ${type}`">
     <slot></slot>
   </button>
 </template>
