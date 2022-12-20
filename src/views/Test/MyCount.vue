@@ -4,15 +4,41 @@
 //   2. 加号和最大值处理
 //   3. 减号和最小值处理
 //   4. props 默认值处理
+
+const {
+  isLabel = true,
+  modelValue,
+  max = 15,
+  min = 1,
+} = defineProps<{
+  isLabel?: boolean;
+  modelValue: number;
+  max?: number;
+  min?: number;
+}>();
+
+const emit = defineEmits<{
+  (event: 'update:modelValue', val: number): void;
+}>();
+
+const add = () => {
+  if (modelValue + 1 > max) return;
+  emit('update:modelValue', modelValue + 1);
+};
+
+const reduce = () => {
+  if (modelValue - 1 < min) return;
+  emit('update:modelValue', modelValue - 1);
+};
 </script>
 
 <template>
   <div class="xtx-numbox">
-    <div class="label">数量</div>
+    <div class="label" v-if="isLabel">数量</div>
     <div class="numbox">
-      <a href="javascript:;">-</a>
-      <input type="text" readonly :value="1" />
-      <a href="javascript:;">+</a>
+      <a href="javascript:;" @click="reduce">-</a>
+      <input type="text" readonly :value="modelValue" />
+      <a href="javascript:;" @click="add">+</a>
     </div>
   </div>
 </template>
