@@ -22,6 +22,8 @@ onMounted(async () => {
   const res = await http<GoodsDetail>('GET', '/goods', { id });
   goods.value = res.data.result;
 });
+
+const count = ref(1);
 </script>
 
 <template>
@@ -34,6 +36,7 @@ onMounted(async () => {
           <!-- 图片预览区 -->
           <div class="goods-image">
             <!-- 图片预览组件 -->
+            <XtxImageView :imageList="goods.mainPictures"></XtxImageView>
           </div>
           <!-- 统计数量,后台没返回数据,不做渲染 -->
           <ul class="goods-sales">
@@ -94,8 +97,13 @@ onMounted(async () => {
             </div>
           </div>
           <!-- 规格选择组件 -->
+          <XtxSku :goods="goods"></XtxSku>
           <!-- 数量选择组件 -->
+          <XtxCount v-model="count" isLabel></XtxCount>
           <!-- 按钮组件 -->
+          <XtxButton type="primary" style="margin-top: 10px"
+            >加入购物车</XtxButton
+          >
         </div>
       </div>
       <div class="goods-info Xtxloading" v-else></div>
