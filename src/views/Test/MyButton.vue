@@ -5,7 +5,7 @@
 // 3. `defineProps` 定义 Props 接收值
 // 4. 模板中使用父组件传过来的值设置按钮样式
 
-import type { PropType } from 'vue';
+// import type { PropType } from 'vue';
 
 // defineProps({
 //   size: {
@@ -32,16 +32,28 @@ import type { PropType } from 'vue';
 // }>();
 
 // 写法2 Proptype 写法 - 了解即可
-defineProps({
-  size: {
-    type: String as PropType<'large' | 'middle' | 'small' | 'mini'>,
-    default: 'small',
-  },
-  type: {
-    type: String as PropType<'default' | 'primary' | 'plain' | 'gray'>,
-    default: 'gray',
-  },
-});
+// defineProps({
+//   size: {
+//     type: String as PropType<'large' | 'middle' | 'small' | 'mini'>,
+//     default: 'small',
+//   },
+//   type: {
+//     type: String as PropType<'default' | 'primary' | 'plain' | 'gray'>,
+//     default: 'gray',
+//   },
+// });
+
+// 写法3 withDefaults 写法 -了解即可
+withDefaults(
+  defineProps<{
+    size?: 'large' | 'middle' | 'small' | 'mini';
+    type?: 'default' | 'primary' | 'plain' | 'gray';
+  }>(),
+  {
+    size: 'small',
+    type: 'primary',
+  }
+);
 </script>
 
 <template>
