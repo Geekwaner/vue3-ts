@@ -4,10 +4,27 @@
 // 2. 分析按钮组件的自定义属性
 // 3. `defineProps` 定义 Props 接收值
 // 4. 模板中使用父组件传过来的值设置按钮样式
+
+// defineProps({
+//   size: {
+//     // vue的类型，需要传递构造器
+//     type: String,
+//     default: 'middle',
+//   },
+//   type: {
+//     type: String,
+//   },
+// });
+// vue3里面，需要用泛型封装，才能更好的提供 ts 的保护
+defineProps<{
+  // ts 的类型，小写即可
+  size?: 'large' | 'middle' | 'small' | 'mini';
+  type?: 'default' | 'primary' | 'plain' | 'gray';
+}>();
 </script>
 
 <template>
-  <button class="xtx-button ellipsis" :class="`middle default`">
+  <button class="xtx-button ellipsis" :class="`${size} ${type}`">
     <slot></slot>
   </button>
 </template>
@@ -25,7 +42,6 @@
   cursor: pointer;
 }
 // ---------大小类名-------------
-// 大
 .large {
   width: 240px;
   height: 50px;
