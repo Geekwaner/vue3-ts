@@ -1,5 +1,31 @@
 <script setup lang="ts">
-//
+import { message } from '@/components/XtxUI';
+import { reactive, ref } from 'vue';
+
+const form = reactive({
+  account: '',
+  password: '',
+});
+
+const isAgree = ref(false);
+
+const loginBtn = () => {
+  if (!form.account) {
+    message({ type: 'warn', text: '用户名不能为空~' });
+    return;
+  }
+  // 正则的写法,留下demo，需要时候可以自行上网查找
+  if (!/^\w{6,15}$/.test(form.password)) {
+    message({ type: 'warn', text: '输入密码，6-15位~' });
+    return;
+  }
+
+  if (!isAgree.value) {
+    message({ type: 'warn', text: '请同意登录条款~' });
+    return;
+  }
+  message({ type: 'success', text: '校验通过，可以登录' });
+};
 </script>
 
 <template>
@@ -8,7 +34,11 @@
       <div class="form-item">
         <div class="input">
           <i class="iconfont icon-user"></i>
-          <input type="text" placeholder="请输入用户名或手机号" />
+          <input
+            type="text"
+            placeholder="请输入用户名或手机号"
+            v-model="form.account"
+          />
         </div>
         <!-- 表单验证错误信息提示 -->
         <!-- <div class="error"><i class="iconfont icon-warning" />请输入手机号</div> -->
@@ -16,19 +46,23 @@
       <div class="form-item">
         <div class="input">
           <i class="iconfont icon-lock"></i>
-          <input type="password" placeholder="请输入密码" />
+          <input
+            type="password"
+            placeholder="请输入密码"
+            v-model="form.password"
+          />
         </div>
       </div>
       <div class="form-item">
         <div class="agree">
-          <XtxCheckBox />
+          <XtxCheckBox v-model="isAgree" />
           <span>我已同意</span>
           <a href="javascript:;">《隐私条款》</a>
           <span>和</span>
           <a href="javascript:;">《服务条款》</a>
         </div>
       </div>
-      <a href="javascript:;" class="btn">登录</a>
+      <a href="javascript:;" class="btn" @click="loginBtn">登录</a>
     </div>
     <div class="action">
       <img
