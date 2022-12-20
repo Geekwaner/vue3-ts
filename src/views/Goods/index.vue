@@ -16,11 +16,11 @@ const { id } = route.params;
 console.log('id -----> ', id);
 
 // 建议定义时候不写值，否则需要把对象类型的属性都写完全，太费功夫，没必要
-const goodsDetail = ref<GoodsDetail>();
+const goods = ref<GoodsDetail>();
 // 不要再顶层直接使用 await 发请求，可以在 onMounted 里发送
 onMounted(async () => {
   const res = await http<GoodsDetail>('GET', '/goods', { id });
-  goodsDetail.value = res.data.result;
+  goods.value = res.data.result;
 });
 </script>
 
@@ -28,7 +28,8 @@ onMounted(async () => {
   <div class="xtx-goods-page">
     <div class="container">
       <!-- 商品信息 -->
-      <div class="goods-info">
+      <!-- goods可能为undefined，所以ts有报错，可以使用可选链，或者在上级做 v-if='goods'判断 -->
+      <div class="goods-info" v-if="goods">
         <div class="media">
           <!-- 图片预览区 -->
           <div class="goods-image">
@@ -62,12 +63,12 @@ onMounted(async () => {
         <div class="spec">
           <!-- 商品主要信息 -->
           <div class="goods-main">
-            <p class="g-name">这是商品标题</p>
-            <p class="g-desc">这是商品描述</p>
+            <p class="g-name">{{ goods.name }}</p>
+            <p class="g-desc">{{ goods.desc }}</p>
             <p class="g-desc">这是选中的商品规格</p>
             <p class="g-price">
-              <span>商品现在的价钱</span>
-              <span>商品原来的价格</span>
+              <span>{{ goods.price }}</span>
+              <span>{{ goods.oldPrice }}</span>
             </p>
             <div class="g-service">
               <dl>
@@ -97,6 +98,7 @@ onMounted(async () => {
           <!-- 按钮组件 -->
         </div>
       </div>
+      <div class="goods-info Xtxloading" v-else></div>
       <!-- 商品详情 -->
       <div class="goods-footer">
         <div class="goods-article">
@@ -129,6 +131,10 @@ onMounted(async () => {
     flex: 1;
     padding: 30px 30px 30px 0;
   }
+}
+// 一定要写在后面，保证样式生效
+.Xtxloading {
+  background: #fff url('@/assets/images/loading.gif') no-repeat center;
 }
 
 // 图片预览区
