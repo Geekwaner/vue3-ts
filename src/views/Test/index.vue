@@ -21,6 +21,11 @@ const modelValue = ref(10);
     :modelValue="modelValue"
     @update:modelValue="(val:number)=>modelValue = val"
   ></MyCount>
+
+  <!-- 上下两行代码完全等价 -->
+  <MyCount v-model="modelValue"></MyCount>
+
+  <!-- vue2中，v-model 原理也是一样的，只不过名字不同，拆分为 :value 和 @input -->
 </template>
 
 <style lang="less" scoped></style>
