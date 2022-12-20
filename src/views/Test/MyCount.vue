@@ -6,9 +6,16 @@
 //   4. props 默认值处理
 
 // 父组件通过 modelValue 传值，那么子组件接收也是 modelValue
-const { isLabel, modelValue } = defineProps<{
-  isLabel: boolean;
+const {
+  isLabel = true,
+  modelValue,
+  max = 20,
+  min = 1,
+} = defineProps<{
+  isLabel?: boolean;
   modelValue: number;
+  max?: number;
+  min?: number;
 }>();
 
 // emit('update:modelValue',1)
@@ -18,9 +25,17 @@ const emit = defineEmits<{
 
 const add = () => {
   // 最大值处理
-  if (modelValue + 1 > 15) return;
+  if (modelValue + 1 > max) return;
   // 没有超过最大值就调用 父组件的方法实现+1
   emit('update:modelValue', modelValue + 1);
+};
+
+// 减号和最小值
+const reduce = () => {
+  // 最小值处理
+  if (modelValue - 1 < min) return;
+  // 没有超过最大值就调用 父组件的方法实现-1
+  emit('update:modelValue', modelValue - 1);
 };
 </script>
 
@@ -28,7 +43,7 @@ const add = () => {
   <div class="xtx-numbox">
     <div class="label" v-if="isLabel">数量</div>
     <div class="numbox">
-      <a href="javascript:;">-</a>
+      <a href="javascript:;" @click="reduce">-</a>
       <input type="text" readonly :value="modelValue" />
       <a href="javascript:;" @click="add">+</a>
     </div>
