@@ -14,6 +14,7 @@ import InfiniteLoad from './InfiniteLoad/index.vue';
 import Tabs from './Tabs/index.vue';
 import TabPane from './Tabs/pane.vue';
 import type { App, Plugin } from 'vue';
+export * from './Message/';
 
 export const XtxSkeleton = Skeleton;
 export const XtxSlider = Slider;

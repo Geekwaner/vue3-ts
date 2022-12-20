@@ -1,35 +1,17 @@
 <script setup lang="ts">
+import { message } from '@/components/XtxUI';
 import { ref } from 'vue';
-import MyButton from './MyButton.vue';
-import MyCount from './MyCount.vue';
-//
 
-const modelValue = ref(10);
+const isAgree = ref(false);
+
+const showMsg = () => {
+  message({ text: '当前选中' + isAgree.value, type: 'success', time: 2000 });
+};
 </script>
 
 <template>
-  <h1>我是测试页面👍</h1>
-  <MyButton size="large" type="plain">按钮</MyButton>
-  <MyButton size="middle">按钮</MyButton>
-
-  <hr />
-  <br />
-
-  <!-- islabel 可以直接传属性名即可 -->
-  <!-- 传数据使用 :modelValue，传方法使用 @update:modelValue -->
-  <MyCount
-    :modelValue="modelValue"
-    @update:modelValue="(val:number)=>modelValue = val"
-  ></MyCount>
-
-  <!-- 上下两行代码完全等价 -->
-  <MyCount v-model="modelValue"></MyCount>
-
-  <!-- vue2中，v-model 原理也是一样的，只不过名字不同，拆分为 :value 和 @input -->
-  <!-- <MyCount
-    :value="modelValue"
-    @imput="(val:number)=>modelValue = val"
-  ></MyCount> -->
+  <h1>Hello vue3 + ts👍</h1>
+  <XtxCheckBox v-model="isAgree" @click="showMsg">我已同意霸王条款</XtxCheckBox>
 </template>
 
 <style lang="less" scoped></style>
