@@ -7,7 +7,7 @@ import { message } from '@/components/XtxUI';
 
 // ❌常见错误，在非 setup 中使用 useRouter
 // const router = useRouter();
-// console.log('router -----> ', router);
+console.log('router -----> ', router);
 export const useMemberStore = defineStore('member', {
   // 开启本地数据持久化
   persist: true,
@@ -33,7 +33,11 @@ export const useMemberStore = defineStore('member', {
     },
     // 登录成功的操作
     loginSuccess() {
-      router.push('/');
+      // 🐛 在非 .vue 组件中 useRoute() 返回 undefined，没法获取当前路由信息
+      // 通过 router.currentRoute 拿到当前的路由对象即可
+      const { target = '/' } = router.currentRoute.value.query;
+      console.log('target -----> ', target);
+      router.push(target as string);
       message({ type: 'success', text: '登录成功' });
     },
     // 类型可以直接写object即可
