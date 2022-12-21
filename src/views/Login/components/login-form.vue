@@ -1,14 +1,16 @@
 <script setup lang="ts">
 import { message } from '@/components/XtxUI';
+import { useMemberStore } from '@/store';
 import { reactive, ref } from 'vue';
 
 const form = reactive({
-  account: '',
-  password: '',
+  account: '15915876393',
+  password: '123456',
 });
 
-const isAgree = ref(false);
+const isAgree = ref(true);
 
+const member = useMemberStore();
 const loginBtn = () => {
   if (!form.account) {
     message({ type: 'warn', text: '用户名不能为空~' });
@@ -24,7 +26,8 @@ const loginBtn = () => {
     message({ type: 'warn', text: '请同意登录条款~' });
     return;
   }
-  message({ type: 'success', text: '校验通过，可以登录' });
+  // message({ type: 'success', text: '校验通过，可以登录' });
+  member.login(form);
 };
 </script>
 
