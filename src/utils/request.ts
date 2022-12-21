@@ -1,4 +1,9 @@
+import { useMemberStore } from '@/store';
 import axios, { type Method } from 'axios';
+// 官方说明：https://pinia.vuejs.org/core-concepts/outside-component-usage.html
+// ❌ 非组件中，Pinia 常见错误写法
+// const member = useMemberStore();
+// console.log('member -----> ', member);
 
 // 创建 axios 实例
 const instance = axios.create({
@@ -10,6 +15,14 @@ const instance = axios.create({
 instance.interceptors.request.use(
   function (config) {
     // 在发送请求之前做些什么
+
+    // ✅ 在组件外，哪里使用，写哪里(消费前获取)
+    const member = useMemberStore();
+    const { token } = member.profile;
+    // token 和 headers 的非空判断，为了兼容ts
+    if (token && config.headers) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
     return config;
   },
   function (error) {
