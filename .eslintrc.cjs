@@ -3,6 +3,10 @@ require('@rushstack/eslint-patch/modern-module-resolution');
 
 module.exports = {
   root: true,
+  // eslint 全局变量声明
+  globals: {
+    QC: true,
+  },
   // 配置eslint规则
   rules: {
     // vue组件必须用组合词: 关闭
