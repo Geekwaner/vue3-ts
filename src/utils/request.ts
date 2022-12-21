@@ -1,3 +1,4 @@
+import { message } from '@/components/XtxUI';
 import { useMemberStore } from '@/store';
 import axios, { type Method } from 'axios';
 // 官方说明：https://pinia.vuejs.org/core-concepts/outside-component-usage.html
@@ -37,6 +38,14 @@ instance.interceptors.response.use(
     return response;
   },
   function (error) {
+    // 无网络，错误提示
+    if (error.code === 'ERR_NETWORK') {
+      message({ text: '您的网络似乎开小差~~' });
+    } else {
+      // 有网络，但后端认为有错误，提示后端响应的错误
+      // console.log('error -----> ', error.response.data.message);
+      message({ type: 'error', text: error.response?.data?.message });
+    }
     // 对响应错误做点什么
     return Promise.reject(error);
   }
