@@ -16,7 +16,12 @@ export const useMemberStore = defineStore('member', {
     };
   },
   // getters相当于 computed
-  getters: {},
+  getters: {
+    //  在getters中使用了this，需要定义返回类型（在 TypeScript 中）
+    isLogin(): boolean {
+      return Boolean(this.profile.token);
+    },
+  },
   // actions 相当于 methods
   actions: {
     // 登录成功的操作

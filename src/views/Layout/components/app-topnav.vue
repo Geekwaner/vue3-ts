@@ -1,15 +1,31 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useMemberStore } from '@/store';
+import { toRefs } from 'vue';
+
+const member = useMemberStore();
+// 注意使用toRefs解构出来的 profile 是ref对象
+const { profile } = toRefs(member);
+const { nickname, account, mobile } = toRefs(profile.value);
+</script>
 
 <template>
   <nav class="app-topnav">
     <div class="container">
       <ul>
-        <li>
-          <a href="javascript:;"><i class="iconfont icon-user"></i>黑马先锋</a>
-        </li>
-        <li><a href="javascript:;">退出登录</a></li>
-        <li><RouterLink to="/login">请先登录</RouterLink></li>
-        <li><a href="javascript:;">免费注册</a></li>
+        <template v-if="member.isLogin">
+          <li>
+            <a href="javascript:;"
+              ><i class="iconfont icon-user"></i>
+              {{ nickname || account || mobile }}
+            </a>
+          </li>
+          <li><a href="javascript:;">退出登录</a></li>
+        </template>
+
+        <template v-else>
+          <li><RouterLink to="/login">请先登录</RouterLink></li>
+          <li><a href="javascript:;">免费注册</a></li>
+        </template>
         <li><a href="javascript:;">我的订单</a></li>
         <li><a href="javascript:;">会员中心</a></li>
         <li><a href="javascript:;">帮助中心</a></li>
