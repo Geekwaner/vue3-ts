@@ -19,7 +19,7 @@ const { nickname, account, mobile } = toRefs(profile.value);
               {{ nickname || account || mobile }}
             </a>
           </li>
-          <li><a href="javascript:;">退出登录</a></li>
+          <li><a href="javascript:;" @click="member.logout">退出登录</a></li>
         </template>
 
         <template v-else>

@@ -9,6 +9,8 @@ import { message } from '@/components/XtxUI';
 // const router = useRouter();
 // console.log('router -----> ', router);
 export const useMemberStore = defineStore('member', {
+  // 开启本地数据持久化
+  persist: true,
   // 相当于 data
   state: () => {
     return {
@@ -24,6 +26,11 @@ export const useMemberStore = defineStore('member', {
   },
   // actions 相当于 methods
   actions: {
+    // 退出登录
+    logout() {
+      this.profile = {} as Profile;
+      message({ type: 'success', text: '退出登录成功' });
+    },
     // 登录成功的操作
     loginSuccess() {
       router.push('/');
