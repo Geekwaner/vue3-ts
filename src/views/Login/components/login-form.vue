@@ -29,6 +29,13 @@ const loginBtn = () => {
   // message({ type: 'success', text: '校验通过，可以登录' });
   member.login(form);
 };
+
+/*
+a 链接的 client_id ，填上自己申请的 appid
+​a 链接的 redirect_uri，填上转码后的 回调地址, ​encodeURIComponent(申请到的回调地址)
+*/
+const href =
+  'https://graph.qq.com/oauth2.0/authorize?response_type=token&scope=all&client_id=100556005&redirect_uri=http%3A%2F%2Fwww.corho.com%3A8080%2F%23%2Flogin%2Fcallback';
 </script>
 
 <template>
@@ -68,10 +75,12 @@ const loginBtn = () => {
       <a href="javascript:;" class="btn" @click="loginBtn">登录</a>
     </div>
     <div class="action">
-      <img
-        src="https://qzonestyle.gtimg.cn/qzone/vas/opensns/res/img/Connect_logo_7.png"
-        alt=""
-      />
+      <a :href="href">
+        <img
+          src="https://qzonestyle.gtimg.cn/qzone/vas/opensns/res/img/Connect_logo_7.png"
+          alt=""
+        />
+      </a>
       <div class="url">
         <a href="javascript:;">忘记密码</a>
         <a href="javascript:;">免费注册</a>
