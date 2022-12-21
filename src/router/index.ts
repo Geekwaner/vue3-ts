@@ -28,6 +28,10 @@ const routes: RouteRecordRaw[] = [
     component: () => import('@/views/Login/index.vue'),
   },
   {
+    path: '/login/callback',
+    component: () => import('@/views/Login/callback.vue'),
+  },
+  {
     path: '/test',
     component: () => import('@/views/Test/index.vue'),
   },
