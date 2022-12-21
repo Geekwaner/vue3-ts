@@ -23,7 +23,11 @@ const { nickname, account, mobile } = toRefs(profile.value);
         </template>
 
         <template v-else>
-          <li><RouterLink to="/login">请先登录</RouterLink></li>
+          <li>
+            <RouterLink :to="`/login?target=${$route.fullPath}`"
+              >请先登录</RouterLink
+            >
+          </li>
           <li><a href="javascript:;">免费注册</a></li>
         </template>
         <li><a href="javascript:;">我的订单</a></li>
