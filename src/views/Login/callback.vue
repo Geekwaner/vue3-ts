@@ -4,6 +4,9 @@ import LoginFooter from './components/login-footer.vue';
 import CallbackBind from './components/callback-bind.vue';
 import CallbackRegister from './components/callback-register.vue';
 import { ref } from 'vue';
+import type { QQUserInfo } from '@/types';
+
+const userInfo = ref<QQUserInfo>();
 // 1. 检查用户是否已登录
 if (QC.Login.check()) {
   // 2. 获取 QQ 用户唯一标识 openId
@@ -11,8 +14,9 @@ if (QC.Login.check()) {
     console.log('🗝️openId', openId);
   });
   // 3. 获取用户资料
-  QC.api('get_user_info').success((res: unknown) => {
+  QC.api('get_user_info').success((res: QQUserInfo) => {
     console.log('😀获取用户资料', res);
+    userInfo.value = res;
   });
 }
 
@@ -42,7 +46,10 @@ const isBind = ref(true);
 
       <!-- KeepAlive缓存组件 -->
       <KeepAlive>
-        <component :is="isBind ? CallbackBind : CallbackRegister"></component>
+        <component
+          :is="isBind ? CallbackBind : CallbackRegister"
+          :userInfo="userInfo"
+        ></component>
       </KeepAlive>
     </div>
   </section>

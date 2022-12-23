@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { QQUserInfo } from '@/types';
 import { reactive } from 'vue';
 
 // keepAlive 会把 form 的数据保留下来
@@ -6,16 +7,20 @@ const form = reactive({
   mobile: '',
   code: '',
 });
+
+defineProps<{
+  userInfo: QQUserInfo;
+}>();
 </script>
 
 <template>
   <div class="xtx-form">
     <div class="user-info">
-      <img
-        src="http://thirdqq.qlogo.cn/g?b=oidb&k=0V4hAibF6g8BBKUPlg7gR4w&s=640&t=1562057721"
-        alt=""
-      />
-      <p>Hi，QQ用户名 欢迎来小兔鲜，完成绑定后可以QQ账号一键登录哦~</p>
+      <img :src="userInfo?.data?.figureurl_2" alt="" />
+      <p>
+        Hi，{{ userInfo?.data?.nickname }}
+        欢迎来小兔鲜，完成绑定后可以QQ账号一键登录哦~
+      </p>
     </div>
     <div class="xtx-form-item">
       <div class="field">
