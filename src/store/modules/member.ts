@@ -50,8 +50,15 @@ export const useMemberStore = defineStore('member', {
 
     // 第三方登录绑定
     async loginSocialBind(data: object) {
-      const res = await http('POST', '/login/social/bind', data);
-      // 能发送请求看到封装好的数据即可，因为验证码业务还没写，会报错
+      const res = await http<Profile>('POST', '/login/social/bind', data);
+      //  绑定成功后，会返回用户信息
+      this.profile = res.data.result;
+      this.loginSuccess();
+    },
+
+    // 发送验证码请求
+    async sentCode(data: object) {
+      const res = await http('GET', '/login/social/code', data);
     },
   },
 });

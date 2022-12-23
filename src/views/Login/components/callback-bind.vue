@@ -31,6 +31,7 @@ const sendCode = () => {
     return;
   }
   message({ type: 'success', text: '手机号码校验通过' });
+  member.sentCode({ mobile: form.mobile });
 };
 </script>
 
