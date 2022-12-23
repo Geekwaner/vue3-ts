@@ -2,6 +2,7 @@
 import { message } from '@/components/XtxUI';
 import { useMemberStore } from '@/store';
 import { reactive, ref } from 'vue';
+import { useRoute } from 'vue-router';
 
 const form = reactive({
   account: '15915876393',
@@ -30,12 +31,15 @@ const loginBtn = () => {
   member.login(form);
 };
 
-/*
-a 链接的 client_id ，填上自己申请的 appid
-​a 链接的 redirect_uri，填上转码后的 回调地址, ​encodeURIComponent(申请到的回调地址)
-*/
+// 拿到当前路由对象的target，跳转到QQ第三方登录页带上即可
+const route = useRoute();
+const { target = '/' } = route.query;
+const redirect_uri = encodeURIComponent(
+  'http://www.corho.com:8080/#/login/callback?target=' + target
+);
 const href =
-  'https://graph.qq.com/oauth2.0/authorize?response_type=token&scope=all&client_id=100556005&redirect_uri=http%3A%2F%2Fwww.corho.com%3A8080%2F%23%2Flogin%2Fcallback';
+  'https://graph.qq.com/oauth2.0/authorize?response_type=token&scope=all&client_id=100556005&redirect_uri=' +
+  redirect_uri;
 </script>
 
 <template>
