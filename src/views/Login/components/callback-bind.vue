@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { message } from '@/components/XtxUI';
 import { useMemberStore } from '@/store';
 import type { QQUserInfo } from '@/types';
 import { reactive } from 'vue';
@@ -21,6 +22,15 @@ const loginSocialBind = () => {
     ...form,
   };
   member.loginSocialBind(data);
+};
+
+const sendCode = () => {
+  // 校验手机号码是否正确
+  if (!/^1[3-9]\d{9}$/.test(form.mobile)) {
+    message({ text: '手机号码格式错误~', type: 'warn' });
+    return;
+  }
+  message({ type: 'success', text: '手机号码校验通过' });
 };
 </script>
 
@@ -54,7 +64,7 @@ const loginSocialBind = () => {
           placeholder="短信验证码"
           v-model="form.code"
         />
-        <span class="code">发送验证码</span>
+        <span class="code" @click="sendCode">发送验证码</span>
       </div>
       <div class="error"></div>
     </div>
