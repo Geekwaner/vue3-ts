@@ -46,6 +46,13 @@ export const useCartStore = defineStore('cart', {
   },
   // 方法
   actions: {
+    // 删除购物车商品
+    async deleteCart(data: object) {
+      // { ids: [ skuId1,skuId2 ] }
+      const res = await http('delete', '/member/cart', data);
+      message({ type: 'success', text: '删除购物车成功' });
+      this.getCartList();
+    },
     // 加入购物车
     async addCart(data: object) {
       const res = await http('post', '/member/cart', data);
