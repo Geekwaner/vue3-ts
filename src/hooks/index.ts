@@ -1,5 +1,5 @@
 import { useIntersectionObserver } from '@vueuse/core';
-import { ref } from 'vue';
+import { ref, onUnmounted } from 'vue';
 
 // 🔔核心单词解释：
 //   useIntersectionObserver   检查元素是否进入可视区函数
@@ -22,4 +22,45 @@ export const useObserver = (fn?: () => void) => {
   return { target };
 };
 
-//  { useObserver }
+/*
+  hooks 和 utils 的职责划分
+  hooks 有使用限制，用来存放业务代码，必须运行在 .vue 的页面中
+  utils 没有使用限制，存放全局工具函数，可以运行在任何 js 地方
+*/
+
+/*
+  倒计时封装
+  1. 把业务代码全部复制到 useCounter 函数里面
+  2. 把需要用到的业务数据返回出去
+  3. useCounter 抽离到 hooks/index 里面
+  4. 其他页面引进 useCounter 函数，调用即可获取所需要的 数据
+
+*/
+export const useCounter = () => {
+  const count = ref(0);
+
+  // 配合 ts 设置0，定时器类型本质是数字
+  let timer = 0;
+  const start = (time = 60) => {
+    // 一开始时候，就判断，有定时器，就不要执行后面的代码了
+    if (count.value) return;
+
+    count.value = time;
+    timer = setInterval(() => {
+      count.value--;
+      console.log('count.value -----> ', count.value);
+
+      // 到0时，清理定时器
+      if (count.value <= 0) {
+        clearInterval(timer);
+      }
+    }, 1000);
+  };
+
+  // 优化：离开页面时，清理定时器
+  onUnmounted(() => clearInterval(timer));
+
+  return { count, start };
+};
+
+//  { useObserver, useCounter }

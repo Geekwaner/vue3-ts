@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { message } from '@/components/XtxUI';
+import { useCounter } from '@/hooks';
 import { useMemberStore } from '@/store';
 import type { QQUserInfo } from '@/types';
 import { reactive } from 'vue';
@@ -24,14 +25,20 @@ const loginSocialBind = () => {
   member.loginSocialBind(data);
 };
 
+const { count, start } = useCounter();
+
 const sendCode = () => {
   // 校验手机号码是否正确
   if (!/^1[3-9]\d{9}$/.test(form.mobile)) {
     message({ text: '手机号码格式错误~', type: 'warn' });
     return;
   }
-  message({ type: 'success', text: '手机号码校验通过' });
-  member.sentCode({ mobile: form.mobile });
+  // 注意，一定要判断，没有倒计时的情况下，才能发送请求，开启倒计时
+  if (count.value === 0) {
+    message({ type: 'success', text: '手机号码校验通过' });
+    member.sentCode({ mobile: form.mobile });
+    start();
+  }
 };
 </script>
 
@@ -65,7 +72,9 @@ const sendCode = () => {
           placeholder="短信验证码"
           v-model="form.code"
         />
-        <span class="code" @click="sendCode">发送验证码</span>
+        <span class="code" @click="sendCode">{{
+          count === 0 ? '发送验证码' : count
+        }}</span>
       </div>
       <div class="error"></div>
     </div>

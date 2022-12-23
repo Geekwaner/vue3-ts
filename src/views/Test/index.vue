@@ -1,30 +1,7 @@
 <script setup lang="ts">
-//
+import { useCounter } from '@/hooks';
 
-import { ref, onUnmounted } from 'vue';
-
-const count = ref(0);
-
-// 配合 ts 设置0，定时器类型本质是数字
-let timer = 0;
-const start = (time = 60) => {
-  // 一开始时候，就判断，有定时器，就不要执行后面的代码了
-  if (count.value) return;
-
-  count.value = time;
-  timer = setInterval(() => {
-    count.value--;
-    console.log('count.value -----> ', count.value);
-
-    // 到0时，清理定时器
-    if (count.value <= 0) {
-      clearInterval(timer);
-    }
-  }, 1000);
-};
-
-// 优化：离开页面时，清理定时器
-onUnmounted(() => clearInterval(timer));
+const { count, start } = useCounter();
 </script>
 
 <template>
