@@ -2,6 +2,9 @@
 // 1. 怎么拿到当前路由对象 ---  useRoute()
 // 2. 怎么拿到当前路由动态参数 --- params
 
+import { message } from '@/components/XtxUI';
+import type { SkuEmit } from '@/components/XtxUI/Sku/index.vue';
+import { useCartStore } from '@/store';
 import type { GoodsDetail } from '@/types';
 import { http } from '@/utils/request';
 import { onMounted, ref } from 'vue';
@@ -13,7 +16,7 @@ import { useRoute } from 'vue-router';
 const route = useRoute();
 // console.log('route -----> ', route);
 const { id } = route.params;
-console.log('id -----> ', id);
+// console.log('id -----> ', id);
 
 // 建议定义时候不写值，否则需要把对象类型的属性都写完全，太费功夫，没必要
 const goods = ref<GoodsDetail>();
@@ -23,7 +26,27 @@ onMounted(async () => {
   goods.value = res.data.result;
 });
 
+const skuId = ref('');
+// 商品规格改变时，会触发，并且穿回来具体的sku信息
+const change = (val: SkuEmit) => {
+  console.log('val -----> ', val);
+  skuId.value = val.skuId;
+};
+
+const cart = useCartStore();
 const count = ref(1);
+const addCart = () => {
+  // 没有 skuId，提醒用户并退出函数
+  if (!skuId.value) {
+    message({ text: '请选择完整的商品信息' });
+    return;
+  }
+  const data = {
+    skuId: skuId.value,
+    count: count.value,
+  };
+  cart.addCart(data);
+};
 </script>
 
 <template>
@@ -97,11 +120,11 @@ const count = ref(1);
             </div>
           </div>
           <!-- 规格选择组件 -->
-          <XtxSku :goods="goods"></XtxSku>
+          <XtxSku :goods="goods" @change="change"></XtxSku>
           <!-- 数量选择组件 -->
           <XtxCount v-model="count" isLabel></XtxCount>
           <!-- 按钮组件 -->
-          <XtxButton type="primary" style="margin-top: 10px"
+          <XtxButton type="primary" style="margin-top: 10px" @click="addCart"
             >加入购物车</XtxButton
           >
         </div>
