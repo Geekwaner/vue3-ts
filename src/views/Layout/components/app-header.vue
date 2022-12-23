@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import AppHeaderNav from './app-header-nav.vue';
+import AppHeaderCart from './app-header-cart.vue';
 </script>
 
 <template>
@@ -14,12 +15,13 @@ import AppHeaderNav from './app-header-nav.vue';
         <input type="text" placeholder="搜一搜" />
       </div>
       <!-- 购物车 -->
-      <div class="cart">
+      <!-- <div class="cart">
         <a class="curr" href="#">
           <i class="iconfont icon-cart"></i>
           <em>2</em>
         </a>
-      </div>
+      </div> -->
+      <AppHeaderCart></AppHeaderCart>
     </div>
   </header>
 </template>
