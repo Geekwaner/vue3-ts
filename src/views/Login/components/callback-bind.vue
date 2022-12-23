@@ -1,16 +1,27 @@
 <script setup lang="ts">
+import { useMemberStore } from '@/store';
 import type { QQUserInfo } from '@/types';
 import { reactive } from 'vue';
 
 // keepAlive 会把 form 的数据保留下来
 const form = reactive({
-  mobile: '',
-  code: '',
+  mobile: '15915876393',
+  code: '123456',
 });
 
-defineProps<{
+const { userInfo, unionId } = defineProps<{
   userInfo: QQUserInfo;
+  unionId: string;
 }>();
+
+const member = useMemberStore();
+const loginSocialBind = () => {
+  const data = {
+    unionId,
+    ...form,
+  };
+  member.loginSocialBind(data);
+};
 </script>
 
 <template>
@@ -47,7 +58,7 @@ defineProps<{
       </div>
       <div class="error"></div>
     </div>
-    <a href="javascript:;" class="submit">立即绑定</a>
+    <a href="javascript:;" class="submit" @click="loginSocialBind">立即绑定</a>
   </div>
 </template>
 

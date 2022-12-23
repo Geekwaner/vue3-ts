@@ -47,6 +47,12 @@ export const useMemberStore = defineStore('member', {
       // 登录成功的操作
       this.loginSuccess();
     },
+
+    // 第三方登录绑定
+    async loginSocialBind(data: object) {
+      const res = await http('POST', '/login/social/bind', data);
+      // 能发送请求看到封装好的数据即可，因为验证码业务还没写，会报错
+    },
   },
 });
 

@@ -7,11 +7,13 @@ import { ref } from 'vue';
 import type { QQUserInfo } from '@/types';
 
 const userInfo = ref<QQUserInfo>();
+const unionId = ref('');
 // 1. 检查用户是否已登录
 if (QC.Login.check()) {
   // 2. 获取 QQ 用户唯一标识 openId
   QC.Login.getMe((openId) => {
     console.log('🗝️openId', openId);
+    unionId.value = openId;
   });
   // 3. 获取用户资料
   QC.api('get_user_info').success((res: QQUserInfo) => {
@@ -49,6 +51,7 @@ const isBind = ref(true);
         <component
           :is="isBind ? CallbackBind : CallbackRegister"
           :userInfo="userInfo"
+          :unionId="unionId"
         ></component>
       </KeepAlive>
     </div>
