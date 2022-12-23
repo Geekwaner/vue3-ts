@@ -1,4 +1,5 @@
 import { message } from '@/components/XtxUI';
+import type { CartList } from '@/types';
 import { http } from '@/utils/request';
 import { defineStore } from 'pinia';
 
@@ -6,7 +7,7 @@ export const useCartStore = defineStore('cart', {
   // 状态
   state: () => ({
     // 购物车列表
-    list: [],
+    list: [] as CartList,
   }),
   // 计算
   getters: {},
@@ -16,6 +17,11 @@ export const useCartStore = defineStore('cart', {
     async addCart(data: object) {
       const res = await http('post', '/member/cart', data);
       message({ type: 'success', text: '添加购物车成功' });
+    },
+    // 获取购物车列表
+    async getCartList() {
+      const res = await http<CartList>('get', '/member/cart');
+      this.list = res.data.result;
     },
   },
 });

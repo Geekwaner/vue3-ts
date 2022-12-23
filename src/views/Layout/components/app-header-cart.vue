@@ -1,29 +1,29 @@
 <script setup lang="ts">
-//
+import { useCartStore } from '@/store';
+
+const cart = useCartStore();
+cart.getCartList();
 </script>
 
 <template>
   <div class="cart">
     <a class="curr" href="javascript:;">
-      <i class="iconfont icon-cart"></i><em>4</em>
+      <i class="iconfont icon-cart"></i><em>{{ cart.list.length }}</em>
     </a>
     <div class="layer">
       <div class="list">
-        <div class="item" v-for="i in 4" :key="i">
-          <RouterLink to="">
-            <img
-              src="https://yanxuan-item.nosdn.127.net/ead73130f3dbdb3cabe1c7b0f4fd3d28.png"
-              alt=""
-            />
+        <div class="item" v-for="item in cart.list" :key="item.skuId">
+          <RouterLink :to="`/goods/${item.id}`">
+            <img :src="item.picture" alt="" />
             <div class="center">
               <p class="name ellipsis-2">
-                和手足干裂说拜拜 ingrams手足皲裂修复霜
+                {{ item.name }}
               </p>
-              <p class="attr ellipsis">颜色：修复绿瓶 容量：150ml</p>
+              <p class="attr ellipsis">{{ item.attrsText }}</p>
             </div>
             <div class="right">
-              <p class="price">&yen;45.00</p>
-              <p class="count">x2</p>
+              <p class="price">&yen;{{ item.nowPrice }}</p>
+              <p class="count">x{{ item.count }}</p>
             </div>
           </RouterLink>
           <i class="iconfont icon-close-new"></i>
