@@ -60,6 +60,13 @@ export const useMemberStore = defineStore('member', {
     async sentCode(data: object) {
       const res = await http('GET', '/login/social/code', data);
     },
+
+    // QQ直接登录
+    async loginQQUnionId(data: object) {
+      const res = await http<Profile>('POST', '/login/social', data);
+      this.profile = res.data.result;
+      this.loginSuccess();
+    },
   },
 });
 

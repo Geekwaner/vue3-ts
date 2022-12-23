@@ -5,7 +5,9 @@ import CallbackBind from './components/callback-bind.vue';
 import CallbackRegister from './components/callback-register.vue';
 import { ref } from 'vue';
 import type { QQUserInfo } from '@/types';
+import { useMemberStore } from '@/store';
 
+const member = useMemberStore();
 const userInfo = ref<QQUserInfo>();
 const unionId = ref('');
 // 1. 检查用户是否已登录
@@ -14,6 +16,7 @@ if (QC.Login.check()) {
   QC.Login.getMe((openId) => {
     console.log('🗝️openId', openId);
     unionId.value = openId;
+    member.loginQQUnionId({ unionId: openId, source: 6 });
   });
   // 3. 获取用户资料
   QC.api('get_user_info').success((res: QQUserInfo) => {
