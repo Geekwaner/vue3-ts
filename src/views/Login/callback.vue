@@ -37,8 +37,13 @@ const isBind = ref(true);
       </a>
     </nav>
     <div class="tab-content">
-      <CallbackBind v-show="isBind"></CallbackBind>
-      <CallbackRegister v-show="!isBind"></CallbackRegister>
+      <!-- <CallbackBind v-show="isBind"></CallbackBind>
+      <CallbackRegister v-show="!isBind"></CallbackRegister> -->
+
+      <!-- KeepAlive缓存组件 -->
+      <KeepAlive>
+        <component :is="isBind ? CallbackBind : CallbackRegister"></component>
+      </KeepAlive>
     </div>
   </section>
   <LoginFooter />
