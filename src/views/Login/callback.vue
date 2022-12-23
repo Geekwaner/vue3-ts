@@ -10,13 +10,29 @@ import { useMemberStore } from '@/store';
 const member = useMemberStore();
 const userInfo = ref<QQUserInfo>();
 const unionId = ref('');
+
+// 枚举类型，不能写在.d.ts上面，
+// 因为枚举类型，需要生成真正的js代码
+// 而.d.ts，不会生成任何js的代码
+
+// 1为pc，2为webapp，3为微信小程序，4为Android，5为ios,6为qq,7为微信
+enum Source {
+  PC = 1,
+  webapp,
+  MiniProgram,
+  Android,
+  IOS,
+  QQ,
+  WeChat,
+}
+
 // 1. 检查用户是否已登录
 if (QC.Login.check()) {
   // 2. 获取 QQ 用户唯一标识 openId
   QC.Login.getMe((openId) => {
     console.log('🗝️openId', openId);
     unionId.value = openId;
-    member.loginQQUnionId({ unionId: openId, source: 6 });
+    member.loginQQUnionId({ unionId: openId, source: Source.QQ });
   });
   // 3. 获取用户资料
   QC.api('get_user_info').success((res: QQUserInfo) => {
