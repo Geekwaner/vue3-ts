@@ -12,7 +12,7 @@ cart.getCartList();
     </a>
     <div class="layer">
       <div class="list">
-        <div class="item" v-for="item in cart.list" :key="item.skuId">
+        <div class="item" v-for="item in cart.effectiveList" :key="item.skuId">
           <RouterLink :to="`/goods/${item.id}`">
             <img :src="item.picture" alt="" />
             <div class="center">

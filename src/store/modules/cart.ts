@@ -10,7 +10,13 @@ export const useCartStore = defineStore('cart', {
     list: [] as CartList,
   }),
   // 计算
-  getters: {},
+  getters: {
+    // 有效商品的列表计算
+    // 1.  isEffective 为真 2. 商品还有库存
+    effectiveList(): CartList {
+      return this.list.filter((v) => v.isEffective && v.stock > 0);
+    },
+  },
   // 方法
   actions: {
     // 加入购物车
