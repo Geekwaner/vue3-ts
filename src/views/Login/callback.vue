@@ -3,6 +3,7 @@ import LoginHeader from './components/login-header.vue';
 import LoginFooter from './components/login-footer.vue';
 import CallbackBind from './components/callback-bind.vue';
 import CallbackRegister from './components/callback-register.vue';
+import { ref } from 'vue';
 // 1. 检查用户是否已登录
 if (QC.Login.check()) {
   // 2. 获取 QQ 用户唯一标识 openId
@@ -14,24 +15,30 @@ if (QC.Login.check()) {
     console.log('😀获取用户资料', res);
   });
 }
+
+const isBind = ref(true);
 </script>
 
 <template>
   <LoginHeader>联合登录</LoginHeader>
   <section class="container">
     <nav class="tab">
-      <a href="javascript:;" class="active">
+      <a href="javascript:;" :class="{ active: isBind }" @click="isBind = true">
         <i class="iconfont icon-bind" />
         <span>已有小兔鲜账号，请绑定手机</span>
       </a>
-      <a href="javascript:;">
+      <a
+        href="javascript:;"
+        :class="{ active: !isBind }"
+        @click="isBind = false"
+      >
         <i class="iconfont icon-edit" />
         <span>没有小兔鲜账号，请完善资料</span>
       </a>
     </nav>
     <div class="tab-content">
-      <CallbackBind></CallbackBind>
-      <CallbackRegister></CallbackRegister>
+      <CallbackBind v-show="isBind"></CallbackBind>
+      <CallbackRegister v-show="!isBind"></CallbackRegister>
     </div>
   </section>
   <LoginFooter />
