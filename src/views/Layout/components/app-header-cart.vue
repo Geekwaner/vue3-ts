@@ -8,7 +8,7 @@ cart.getCartList();
 <template>
   <div class="cart">
     <a class="curr" href="javascript:;">
-      <i class="iconfont icon-cart"></i><em>{{ cart.list.length }}</em>
+      <i class="iconfont icon-cart"></i><em>{{ cart.effectiveListCount }}</em>
     </a>
     <div class="layer">
       <div class="list">
@@ -31,8 +31,8 @@ cart.getCartList();
       </div>
       <div class="foot">
         <div class="total">
-          <p>共 3 件商品</p>
-          <p>&yen;135.00</p>
+          <p>共 {{ cart.effectiveListCount }} 件商品</p>
+          <p>&yen;{{ cart.effectiveListPrice }}</p>
         </div>
         <XtxButton type="plain">去购物车结算</XtxButton>
       </div>

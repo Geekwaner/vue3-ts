@@ -16,6 +16,21 @@ export const useCartStore = defineStore('cart', {
     effectiveList(): CartList {
       return this.list.filter((v) => v.isEffective && v.stock > 0);
     },
+
+    // 计算有效商品的数量
+    effectiveListCount() {
+      // 写法1，保证业务实现
+      let sum = 0;
+      this.effectiveList.forEach((v) => (sum += v.count));
+      return sum;
+    },
+    // 有效商品总价格
+    effectiveListPrice() {
+      // 写法1，保证业务实现
+      let sum = 0;
+      this.effectiveList.forEach((v) => (sum += Number(v.nowPrice) * v.count));
+      return sum;
+    },
   },
   // 方法
   actions: {
@@ -23,6 +38,8 @@ export const useCartStore = defineStore('cart', {
     async addCart(data: object) {
       const res = await http('post', '/member/cart', data);
       message({ type: 'success', text: '添加购物车成功' });
+      // 修改完购物车后，一定要记得获取最新的购物车数据
+      this.getCartList();
     },
     // 获取购物车列表
     async getCartList() {
