@@ -5,7 +5,7 @@
 import { message } from '@/components/XtxUI';
 import type { SkuEmit } from '@/components/XtxUI/Sku/index.vue';
 import { useCartStore } from '@/store';
-import type { GoodsDetail } from '@/types';
+import type { CartItem, GoodsDetail } from '@/types';
 import { http } from '@/utils/request';
 import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
@@ -27,10 +27,12 @@ onMounted(async () => {
 });
 
 const skuId = ref('');
+const attrsText = ref('');
 // 商品规格改变时，会触发，并且穿回来具体的sku信息
 const change = (val: SkuEmit) => {
   console.log('val -----> ', val);
   skuId.value = val.skuId;
+  attrsText.value = val.specsText;
 };
 
 const cart = useCartStore();
@@ -41,6 +43,26 @@ const addCart = () => {
     message({ text: '请选择完整的商品信息' });
     return;
   }
+  if (!goods.value) return;
+  const cartItem = {
+    // 第一部分：商品详情中有的
+    id: goods.value.id, // 商品id
+    name: goods.value.name, // 商品名称
+    picture: goods.value.mainPictures[0], // 图片
+    price: goods.value.oldPrice, // 旧价格
+    nowPrice: goods.value.price, // 新价格
+    stock: goods.value.inventory, // 库存
+    // 第二部分：商品详情中没有的，自己通过响应式数据收集
+    count: count.value,
+    skuId: skuId.value,
+    attrsText: attrsText.value, //商品规格文本
+    // 第三部分：设置默认值即可
+    selected: true, // 默认商品选中
+    isEffective: true, // 默认商品有效
+  } as CartItem;
+
+  console.log('📌cartItem 数据终于准备完毕了', cartItem);
+
   const data = {
     skuId: skuId.value,
     count: count.value,
