@@ -8,6 +8,7 @@ import { useMemberStore } from './member';
 // const member = useMemberStore();
 
 export const useCartStore = defineStore('cart', {
+  persist: true,
   // 状态
   state: () => ({
     // 购物车列表
@@ -81,13 +82,17 @@ export const useCartStore = defineStore('cart', {
       this.list = [] as CartList;
     },
     // 删除购物车商品
-    async deleteCart(data: object) {
+    async deleteCart(data: { ids: string[] }) {
       if (this.isLogin) {
         // { ids: [ skuId1,skuId2 ] }
         const res = await http('delete', '/member/cart', data);
-        message({ type: 'success', text: '删除购物车成功' });
         this.getCartList();
+      } else {
+        // console.log('data -----> ', data);  ----> { ids: ['300485153'] }
+        this.list = this.list.filter((v) => v.skuId !== data.ids[0]);
       }
+
+      message({ type: 'success', text: '删除成功' });
     },
     // 加入购物车
     async addCart(data: CartItem) {
