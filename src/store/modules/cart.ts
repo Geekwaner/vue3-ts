@@ -122,7 +122,14 @@ export const useCartStore = defineStore('cart', {
         const res = await http<CartList>('get', '/member/cart');
         this.list = res.data.result;
       } else {
-        message({ text: '暂未登录~' });
+        // 更新整个本地购物车，获取最新数据即可
+        this.list.forEach(async (item) => {
+          const res = await http<CartItem>('get', '/goods/stock/' + item.skuId);
+          const { isEffective, stock, nowPrice } = res.data.result;
+          item.isEffective = isEffective;
+          item.stock = stock;
+          item.nowPrice = nowPrice;
+        });
       }
     },
 
