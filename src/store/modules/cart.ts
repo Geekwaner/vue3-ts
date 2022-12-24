@@ -114,7 +114,7 @@ export const useCartStore = defineStore('cart', {
           this.list.unshift(data);
         }
       }
-      message({ type: 'success', text: '添加购物车成功' });
+      message({ type: 'success', text: '添加购物车成功~' });
     },
     // 获取购物车列表
     async getCartList() {
@@ -122,15 +122,29 @@ export const useCartStore = defineStore('cart', {
         const res = await http<CartList>('get', '/member/cart');
         this.list = res.data.result;
       } else {
-        message({ text: '暂未登录' });
+        message({ text: '暂未登录~' });
       }
     },
 
     // 修改购物车状态
-    async updateCart(skuId: string, data: object) {
-      const res = await http('put', '/member/cart/' + skuId, data);
-      message({ type: 'success', text: '修改购物车成功' });
-      this.getCartList();
+    async updateCart(
+      skuId: string,
+      data: { selected?: boolean; count?: number }
+    ) {
+      if (this.isLogin) {
+        const res = await http('put', '/member/cart/' + skuId, data);
+        this.getCartList();
+      } else {
+        // console.log('data -----> ', data);
+        // 找到购物车 skuId 的商品
+        const cartItem = this.list.find((v) => v.skuId === skuId);
+        if (cartItem) {
+          if (data.selected !== undefined) cartItem.selected = data.selected;
+          if (data.count !== undefined) cartItem.count = data.count;
+        }
+      }
+
+      message({ type: 'success', text: '修改成功~' });
     },
 
     // 购物车全选/反选
