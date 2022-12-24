@@ -52,7 +52,13 @@ cart.getCartList();
                 <p>&yen;{{ goods.nowPrice }}</p>
               </td>
               <td class="tc">
-                <XtxCount :model-value="goods.count" :max="goods.stock" />
+                <XtxCount
+                  :model-value="goods.count"
+                  @change="
+                    (val) => cart.updateCart(goods.skuId, { count: val })
+                  "
+                  :max="goods.stock"
+                />
               </td>
               <td class="tc">
                 <p class="f16 red">
