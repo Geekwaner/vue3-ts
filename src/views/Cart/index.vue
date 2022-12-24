@@ -1,5 +1,8 @@
 <script setup lang="ts">
-//
+import { useCartStore } from '@/store';
+
+const cart = useCartStore();
+cart.getCartList();
 </script>
 
 <template>
@@ -23,34 +26,42 @@
           </thead>
           <!-- 有效商品 -->
           <tbody>
-            <tr v-for="i in 3" :key="i">
-              <td><XtxCheckBox :model-value="true" /></td>
+            <tr v-for="goods in cart.effectiveList" :key="goods.skuId">
+              <td><XtxCheckBox :model-value="goods.selected" /></td>
               <td>
                 <div class="goods">
-                  <RouterLink to="/">
-                    <img
-                      src="https://yanxuan-item.nosdn.127.net/13ab302f8f2c954d873f03be36f8fb03.png"
-                      alt=""
-                    />
+                  <RouterLink :to="`/goods/${goods.id}`">
+                    <img :src="goods.picture" alt="" />
                   </RouterLink>
                   <div>
                     <p class="name ellipsis">
-                      和手足干裂说拜拜 ingrams手足皲裂修复霜
+                      {{ goods.name }}
                     </p>
-                    <p class="attr">商品规格</p>
+                    <p class="attr">{{ goods.attrsText }}</p>
                   </div>
                 </div>
               </td>
               <td class="tc">
-                <p>&yen;200.00</p>
+                <p>&yen;{{ goods.nowPrice }}</p>
               </td>
               <td class="tc">
-                <XtxCount :model-value="1" />
+                <XtxCount :model-value="goods.count" :max="goods.stock" />
               </td>
-              <td class="tc"><p class="f16 red">&yen;200.00</p></td>
+              <td class="tc">
+                <p class="f16 red">
+                  &yen;{{ (Number(goods.nowPrice) * goods.count).toFixed(2) }}
+                </p>
+              </td>
               <td class="tc">
                 <p><a href="javascript:;">移入收藏夹</a></p>
-                <p><a class="green" href="javascript:;">删除</a></p>
+                <p>
+                  <a
+                    class="green"
+                    href="javascript:;"
+                    @click="cart.deleteCart({ ids: [goods.skuId] })"
+                    >删除</a
+                  >
+                </p>
                 <p><a href="javascript:;">找相似</a></p>
               </td>
             </tr>
