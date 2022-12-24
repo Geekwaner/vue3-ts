@@ -13,6 +13,8 @@ module.exports = {
     'vue/multi-word-component-names': 'off',
     // vue不允许解构赋值： 关闭
     'vue/no-setup-props-destructure': 'off',
+    // 关闭定义了变量没使用规则
+    '@typescript-eslint/no-unused-vars': 'off',
   },
   extends: [
     'plugin:vue/vue3-essential',
