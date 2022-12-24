@@ -7,10 +7,14 @@ cart.getCartList();
 
 <template>
   <div class="cart">
-    <a class="curr" href="javascript:;">
+    <RouterLink class="curr" to="/cart">
       <i class="iconfont icon-cart"></i><em>{{ cart.effectiveListCount }}</em>
-    </a>
-    <div class="layer" v-if="cart.effectiveListCount">
+    </RouterLink>
+    <div
+      class="layer"
+      v-if="cart.effectiveListCount"
+      v-show="$route.path !== '/cart'"
+    >
       <div class="list">
         <div class="item" v-for="item in cart.effectiveList" :key="item.skuId">
           <RouterLink :to="`/goods/${item.id}`">
@@ -37,7 +41,9 @@ cart.getCartList();
           <p>共 {{ cart.effectiveListCount }} 件商品</p>
           <p>&yen;{{ cart.effectiveListPrice }}</p>
         </div>
-        <XtxButton type="plain">去购物车结算</XtxButton>
+        <XtxButton type="plain" @click="$router.push('/cart')"
+          >去购物车结算</XtxButton
+        >
       </div>
     </div>
   </div>
