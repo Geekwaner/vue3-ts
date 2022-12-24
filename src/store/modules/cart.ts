@@ -79,5 +79,12 @@ export const useCartStore = defineStore('cart', {
       message({ type: 'success', text: '修改购物车成功' });
       this.getCartList();
     },
+
+    // 购物车全选/反选
+    async updateCartAllSelected(data: object) {
+      const res = await http('put', '/member/cart/selected', data);
+      message({ type: 'success', text: '修改购物车成功' });
+      this.getCartList();
+    },
   },
 });

@@ -17,7 +17,13 @@ cart.getCartList();
           <thead>
             <tr>
               <th width="120">
-                <XtxCheckBox :modelValue="cart.isAllSelected">全选</XtxCheckBox>
+                <XtxCheckBox
+                  :modelValue="cart.isAllSelected"
+                  @update:model-value="
+                    (val) => cart.updateCartAllSelected({ selected: val })
+                  "
+                  >全选</XtxCheckBox
+                >
               </th>
               <th width="400">商品信息</th>
               <th width="220">单价</th>
