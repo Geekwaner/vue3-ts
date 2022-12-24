@@ -11,6 +11,13 @@ export const useCartStore = defineStore('cart', {
   }),
   // 计算
   getters: {
+    // 是否全选
+    isAllSelected(): boolean {
+      return (
+        this.effectiveList.length > 0 &&
+        this.effectiveList.every((v) => v.selected)
+      );
+    },
     // 有效商品的列表计算
     // 1.  isEffective 为真 2. 商品还有库存
     effectiveList(): CartList {
