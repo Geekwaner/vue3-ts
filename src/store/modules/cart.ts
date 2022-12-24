@@ -2,6 +2,10 @@ import { message } from '@/components/XtxUI';
 import type { CartList } from '@/types';
 import { http } from '@/utils/request';
 import { defineStore } from 'pinia';
+import { useMemberStore } from './member';
+
+// ❌  失败，因为它是在创建 pinia 之前调用的
+// const member = useMemberStore();
 
 export const useCartStore = defineStore('cart', {
   // 状态
@@ -11,6 +15,10 @@ export const useCartStore = defineStore('cart', {
   }),
   // 计算
   getters: {
+    isLogin() {
+      const member = useMemberStore();
+      return member.isLogin;
+    },
     // 是否全选
     isAllSelected(): boolean {
       return (
@@ -74,22 +82,30 @@ export const useCartStore = defineStore('cart', {
     },
     // 删除购物车商品
     async deleteCart(data: object) {
-      // { ids: [ skuId1,skuId2 ] }
-      const res = await http('delete', '/member/cart', data);
-      message({ type: 'success', text: '删除购物车成功' });
-      this.getCartList();
+      if (this.isLogin) {
+        // { ids: [ skuId1,skuId2 ] }
+        const res = await http('delete', '/member/cart', data);
+        message({ type: 'success', text: '删除购物车成功' });
+        this.getCartList();
+      }
     },
     // 加入购物车
     async addCart(data: object) {
-      const res = await http('post', '/member/cart', data);
-      message({ type: 'success', text: '添加购物车成功' });
-      // 修改完购物车后，一定要记得获取最新的购物车数据
-      this.getCartList();
+      if (this.isLogin) {
+        const res = await http('post', '/member/cart', data);
+        message({ type: 'success', text: '添加购物车成功' });
+        // 修改完购物车后，一定要记得获取最新的购物车数据
+        this.getCartList();
+      }
     },
     // 获取购物车列表
     async getCartList() {
-      const res = await http<CartList>('get', '/member/cart');
-      this.list = res.data.result;
+      if (this.isLogin) {
+        const res = await http<CartList>('get', '/member/cart');
+        this.list = res.data.result;
+      } else {
+        message({ text: '暂未登录' });
+      }
     },
 
     // 修改购物车状态
