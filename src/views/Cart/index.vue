@@ -25,9 +25,16 @@ cart.getCartList();
             </tr>
           </thead>
           <!-- 有效商品 -->
-          <tbody>
+          <tbody v-if="cart.effectiveListCount">
             <tr v-for="goods in cart.effectiveList" :key="goods.skuId">
-              <td><XtxCheckBox :model-value="goods.selected" /></td>
+              <td>
+                <XtxCheckBox
+                  :model-value="goods.selected"
+                  @update:model-value="
+                    (val:boolean) => cart.updateCart(goods.skuId, { selected: val })
+                  "
+                />
+              </td>
               <td>
                 <div class="goods">
                   <RouterLink :to="`/goods/${goods.id}`">
@@ -63,6 +70,20 @@ cart.getCartList();
                   >
                 </p>
                 <p><a href="javascript:;">找相似</a></p>
+              </td>
+            </tr>
+          </tbody>
+          <!-- 删除光购物车之后使用元素占位 -->
+          <tbody v-else>
+            <tr>
+              <td colspan="6">
+                <div class="cart-none" style="text-align: center">
+                  <img src="@/assets/images/none.png" alt="" />
+                  <p>购物车内暂时没有商品</p>
+                  <div class="btn" style="margin: 20px">
+                    <XtxButton type="primary"> 继续逛逛 </XtxButton>
+                  </div>
+                </div>
               </td>
             </tr>
           </tbody>

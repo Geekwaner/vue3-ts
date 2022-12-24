@@ -65,5 +65,12 @@ export const useCartStore = defineStore('cart', {
       const res = await http<CartList>('get', '/member/cart');
       this.list = res.data.result;
     },
+
+    // 修改购物车状态
+    async updateCart(skuId: string, data: object) {
+      const res = await http('put', '/member/cart/' + skuId, data);
+      message({ type: 'success', text: '修改购物车成功' });
+      this.getCartList();
+    },
   },
 });
