@@ -68,6 +68,10 @@ export const useCartStore = defineStore('cart', {
   },
   // 方法
   actions: {
+    // 清空购物车
+    clearCart() {
+      this.list = [] as CartList;
+    },
     // 删除购物车商品
     async deleteCart(data: object) {
       // { ids: [ skuId1,skuId2 ] }

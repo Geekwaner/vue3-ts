@@ -4,10 +4,12 @@ import { defineStore } from 'pinia';
 // 🎯非 vue 组件，导入路由实例
 import router from '@/router';
 import { message } from '@/components/XtxUI';
+import { useCartStore } from './cart';
 
 // ❌常见错误，在非 setup 中使用 useRouter
 // const router = useRouter();
 console.log('router -----> ', router);
+
 export const useMemberStore = defineStore('member', {
   // 开启本地数据持久化
   persist: true,
@@ -30,6 +32,9 @@ export const useMemberStore = defineStore('member', {
     logout() {
       this.profile = {} as Profile;
       message({ type: 'success', text: '退出登录成功' });
+      // 退出登录-主动清空购物车数据
+      const cart = useCartStore();
+      cart.clearCart();
     },
     // 登录成功的操作
     loginSuccess() {
