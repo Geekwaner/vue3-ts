@@ -1,5 +1,5 @@
 import { message } from '@/components/XtxUI';
-import type { CartList } from '@/types';
+import type { CartItem, CartList } from '@/types';
 import { http } from '@/utils/request';
 import { defineStore } from 'pinia';
 import { useMemberStore } from './member';
@@ -90,13 +90,26 @@ export const useCartStore = defineStore('cart', {
       }
     },
     // 加入购物车
-    async addCart(data: object) {
+    async addCart(data: CartItem) {
       if (this.isLogin) {
-        const res = await http('post', '/member/cart', data);
-        message({ type: 'success', text: '添加购物车成功' });
+        const res = await http('post', '/member/cart', {
+          count: data.count,
+          skuId: data.skuId,
+        });
         // 修改完购物车后，一定要记得获取最新的购物车数据
         this.getCartList();
+      } else {
+        // 如果已经有相同的商品规格，那么添加数量即可，否则就添加一条数据
+        const cartItem = this.list.find((v) => v.skuId === data.skuId);
+        if (cartItem) {
+          // 有就把数量相加
+          cartItem.count += data.count;
+        } else {
+          // 没有的话，就直接新增一条数据即可
+          this.list.unshift(data);
+        }
       }
+      message({ type: 'success', text: '添加购物车成功' });
     },
     // 获取购物车列表
     async getCartList() {

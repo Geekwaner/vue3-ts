@@ -63,11 +63,7 @@ const addCart = () => {
 
   console.log('📌cartItem 数据终于准备完毕了', cartItem);
 
-  const data = {
-    skuId: skuId.value,
-    count: count.value,
-  };
-  cart.addCart(data);
+  cart.addCart(cartItem);
 };
 </script>
 
