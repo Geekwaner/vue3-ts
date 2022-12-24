@@ -165,5 +165,26 @@ export const useCartStore = defineStore('cart', {
       }
       message({ type: 'success', text: '修改购物车成功' });
     },
+
+    // 合并购物车，在登录后，把本地的商品都合并到线上即可
+    async mergeLocalCart() {
+      // const data = this.list.map((o) => {
+      //   return {
+      //     count: o.count,
+      //     skuId: o.skuId,
+      //     selected: o.selected,
+      //   };
+      // });
+      // 精简写法
+      const data = this.list.map(({ count, skuId, selected }) => ({
+        count,
+        skuId,
+        selected,
+      }));
+      const res = await http('POST', '/member/cart/merge', data);
+
+      // 合并成功，重新获取购物车列表
+      this.getCartList();
+    },
   },
 });

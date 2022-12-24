@@ -44,6 +44,10 @@ export const useMemberStore = defineStore('member', {
       console.log('target -----> ', target);
       router.push(target as string);
       message({ type: 'success', text: '登录成功' });
+
+      // 执行合并购物车操作
+      const cart = useCartStore();
+      cart.mergeLocalCart();
     },
     // 类型可以直接写object即可
     async login(data: object) {
