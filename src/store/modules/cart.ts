@@ -50,6 +50,21 @@ export const useCartStore = defineStore('cart', {
         0
       );
     },
+
+    // 已选择商品列表
+    selectedList(): CartList {
+      return this.effectiveList.filter((v) => v.selected);
+    },
+    // 已选择商品的数量
+    selectedListCount(): number {
+      return this.selectedList.reduce((sum, item) => sum + item.count, 0);
+    },
+    // 已选择商品的价格
+    selectedListPrice(): string {
+      return this.selectedList
+        .reduce((sum, item) => sum + Number(item.nowPrice) * item.count, 0)
+        .toFixed(2);
+    },
   },
   // 方法
   actions: {

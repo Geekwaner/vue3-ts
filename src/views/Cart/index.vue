@@ -107,8 +107,9 @@ cart.getCartList();
       <div class="action">
         <div class="batch"></div>
         <div class="total">
-          共 7 件有效商品，已选择 2 件，商品合计：
-          <span class="red">¥400</span>
+          共 {{ cart.effectiveListCount }} 件有效商品，已选择
+          {{ cart.selectedListCount }} 件，商品合计：
+          <span class="red">¥{{ cart.selectedListPrice }}</span>
           <XtxButton type="primary">下单结算</XtxButton>
         </div>
       </div>
