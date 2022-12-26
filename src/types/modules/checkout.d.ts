@@ -40,3 +40,18 @@ export interface CheckoutInfo {
   goods: Good[];
   summary: Summary;
 }
+
+export interface SubmitCheckout {
+  id: string;
+  createTime: string;
+  payType: number;
+  orderState: number;
+  payLatestTime: string;
+  postFee: number;
+  payMoney: number;
+  totalMoney: number;
+  totalNum: number;
+  skus?: any;
+  payChannel: number;
+  countdown?: any;
+}
