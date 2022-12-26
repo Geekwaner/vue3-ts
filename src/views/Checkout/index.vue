@@ -3,6 +3,7 @@ import { useCheckoutStore } from '@/store';
 import { storeToRefs } from 'pinia';
 import { computed, ref } from 'vue';
 import { hideContact } from '@/utils';
+import { message } from '@/components/XtxUI';
 const checkout = useCheckoutStore();
 checkout.getCheckouInfo();
 
@@ -31,6 +32,27 @@ const currentAddress = computed(() => {
 });
 
 const visible = ref(false);
+
+const submitCheckout = () => {
+  // 没有收货地址提示
+  if (!currentAddress.value.id) {
+    return message({ text: '请选择收货地址' });
+  }
+  // 封装后台需要的参数
+  const data = {
+    goods: checkout.checkoutInfo.goods.map(({ skuId, count }) => ({
+      skuId,
+      count,
+    })),
+    addressId: currentAddress.value.id,
+    // 其他字段比较简单就不额外处理了
+    deliveryTimeType: 1,
+    payType: 1,
+    payChannel: 1,
+    buyerMessage: '买家留言',
+  };
+  checkout.submitCheckout(data);
+};
 </script>
 
 <template>
@@ -199,7 +221,7 @@ const visible = ref(false);
         </div>
         <!-- 提交订单 -->
         <div class="submit">
-          <XtxButton type="primary">提交订单</XtxButton>
+          <XtxButton type="primary" @click="submitCheckout">提交订单</XtxButton>
         </div>
       </div>
     </div>
