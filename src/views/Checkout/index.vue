@@ -31,19 +31,37 @@ const visible = ref(false);
 </script>
 
 <template>
-  <XtxDialog title="收货地址弹出框" :visible="visible" @close="visible = false">
-    <h1>默认插槽</h1>
-    <template #footer>
-      <XtxButton
-        type="gray"
-        style="margin-right: 20px"
-        @click="visible = false"
+  <!--
+    fixed 定位 会被祖先元素的 transform、perspective、filter 影响
+    祖先元素 transform、perspective、filter 不为 none的时候
+    fixed定位的参照物会是该祖先元素
+   -->
+  <div style="transform: translate(0)">
+    <!--
+    Teleport传送门, vue3 内置组件，
+    to属性传入css选择器，例如这里的body，那么把 Teleport 里面元素传送到 body，父元素是 body
+	  to传送到的结构需要提前准备，例如传递到#hahahaha,找不到这个dom会报错
+    -->
+    <Teleport to="body">
+      <XtxDialog
+        title="收货地址弹出框"
+        :visible="visible"
+        @close="visible = false"
       >
-        取消
-      </XtxButton>
-      <XtxButton type="primary" @click="visible = false">确认</XtxButton>
-    </template>
-  </XtxDialog>
+        <h1>默认插槽</h1>
+        <template #footer>
+          <XtxButton
+            type="gray"
+            style="margin-right: 20px"
+            @click="visible = false"
+          >
+            取消
+          </XtxButton>
+          <XtxButton type="primary" @click="visible = false">确认</XtxButton>
+        </template>
+      </XtxDialog>
+    </Teleport>
+  </div>
   <div class="xtx-pay-checkout-page">
     <div class="container">
       <XtxBread>
