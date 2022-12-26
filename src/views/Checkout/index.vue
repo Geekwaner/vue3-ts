@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import { useCheckoutStore } from '@/store';
+import { storeToRefs } from 'pinia';
 const checkout = useCheckoutStore();
 checkout.getCheckouInfo();
+
+const { checkoutInfo } = storeToRefs(checkout);
 </script>
 
 <template>
@@ -12,7 +15,7 @@ checkout.getCheckouInfo();
         <XtxBreadItem to="/cart">购物车</XtxBreadItem>
         <XtxBreadItem>填写订单</XtxBreadItem>
       </XtxBread>
-      <div class="wrapper">
+      <div class="wrapper" v-if="checkoutInfo.goods">
         <!-- 收货地址 -->
         <h3 class="box-title">收货地址</h3>
         <div class="box-body">
@@ -47,24 +50,21 @@ checkout.getCheckouInfo();
               </tr>
             </thead>
             <tbody>
-              <tr v-for="item in 4" :key="item">
+              <tr v-for="item in checkoutInfo.goods" :key="item.skuId">
                 <td>
-                  <a href="javascript:;" class="info">
-                    <img
-                      src="https://yanxuan-item.nosdn.127.net/cd9b2550cde8bdf98c9d083d807474ce.png"
-                      alt=""
-                    />
+                  <RouterLink :to="`/goods/${item.id}`" class="info">
+                    <img :src="item.picture" alt="" />
                     <div class="right">
-                      <p>轻巧多用锅雪平锅 麦饭石不粘小奶锅煮锅</p>
-                      <p>颜色：白色 尺寸：10cm 产地：日本</p>
+                      <p>{{ item.name }}</p>
+                      <p>{{ item.attrsText }}</p>
                     </div>
-                  </a>
+                  </RouterLink>
                 </td>
                 <!--  顺序：实付单价，数量，小计总价，实付价格小计 -->
-                <td>&yen;100.00</td>
-                <td>2</td>
-                <td>&yen;200.00</td>
-                <td>&yen;200.00</td>
+                <td>&yen;{{ item.payPrice }}</td>
+                <td>{{ item.count }}</td>
+                <td>&yen;{{ item.totalPrice }}</td>
+                <td>&yen;{{ item.totalPayPrice }}</td>
               </tr>
             </tbody>
           </table>
@@ -91,19 +91,19 @@ checkout.getCheckouInfo();
           <div class="total">
             <dl>
               <dt>商品件数：</dt>
-              <dd>5件</dd>
+              <dd>{{ checkoutInfo.summary.goodsCount }}件</dd>
             </dl>
             <dl>
               <dt>商品总价：</dt>
-              <dd>¥5697.00</dd>
+              <dd>¥{{ checkoutInfo.summary.totalPrice }}</dd>
             </dl>
             <dl>
               <dt>运<i></i>费：</dt>
-              <dd>¥0.00</dd>
+              <dd>¥{{ checkoutInfo.summary.postFee }}</dd>
             </dl>
             <dl>
               <dt>应付总额：</dt>
-              <dd class="price">¥5697.00</dd>
+              <dd class="price">¥{{ checkoutInfo.summary.totalPayPrice }}</dd>
             </dl>
           </div>
         </div>
