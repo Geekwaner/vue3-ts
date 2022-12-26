@@ -1,8 +1,22 @@
 <script setup lang="ts">
+import { message } from '@/components/XtxUI';
 import { useCartStore } from '@/store';
+import { useRouter } from 'vue-router';
 
 const cart = useCartStore();
 cart.getCartList();
+
+const router = useRouter();
+const goCheckout = () => {
+  // 1. 判断是否登录， 2. 判断是否有选中的商品
+  if (!cart.isLogin) {
+    return message({ text: '请先登录~' });
+  }
+  if (cart.selectedListCount === 0) {
+    return message({ text: '请选择商品下单~' });
+  }
+  router.push('/member/checkout');
+};
 </script>
 
 <template>
@@ -110,7 +124,7 @@ cart.getCartList();
           共 {{ cart.effectiveListCount }} 件有效商品，已选择
           {{ cart.selectedListCount }} 件，商品合计：
           <span class="red">¥{{ cart.selectedListPrice }}</span>
-          <XtxButton type="primary">下单结算</XtxButton>
+          <XtxButton type="primary" @click="goCheckout">下单结算</XtxButton>
         </div>
       </div>
     </div>

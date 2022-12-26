@@ -25,6 +25,11 @@ const routes: RouteRecordRaw[] = [
         path: '/cart',
         component: () => import('@/views/Cart/index.vue'),
       },
+      {
+        // 注意路由的命名，/member/* 代表用户需要登录才能访问
+        path: '/member/checkout',
+        component: () => import('@/views/Checkout/index.vue'),
+      },
     ],
   },
   {
