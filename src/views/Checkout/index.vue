@@ -26,9 +26,24 @@ const index = ref(0);
 const currentAddress = computed(() => {
   return checkout.checkoutInfo.userAddresses?.[index.value] || {};
 });
+
+const visible = ref(false);
 </script>
 
 <template>
+  <XtxDialog title="收货地址弹出框" :visible="visible" @close="visible = false">
+    <h1>默认插槽</h1>
+    <template #footer>
+      <XtxButton
+        type="gray"
+        style="margin-right: 20px"
+        @click="visible = false"
+      >
+        取消
+      </XtxButton>
+      <XtxButton type="primary" @click="visible = false">确认</XtxButton>
+    </template>
+  </XtxDialog>
   <div class="xtx-pay-checkout-page">
     <div class="container">
       <XtxBread>
@@ -55,7 +70,9 @@ const currentAddress = computed(() => {
               <div class="none" v-else>您需要先添加收货地址才可提交订单。</div>
             </div>
             <div class="action">
-              <XtxButton class="btn">切换地址</XtxButton>
+              <XtxButton class="btn" @click="visible = true"
+                >切换地址</XtxButton
+              >
               <XtxButton class="btn">添加地址</XtxButton>
             </div>
           </div>
