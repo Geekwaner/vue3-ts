@@ -1,5 +1,14 @@
 <script setup lang="ts">
-//
+import { useCheckoutStore } from '@/store';
+import { useRoute } from 'vue-router';
+
+const checkout = useCheckoutStore();
+// 在 setup 中可以使用 useRoute()、useRouter()
+const route = useRoute();
+const { orderId } = route.query;
+// 值需要考虑正常的url传参，这里不建议做兼容，不考虑数组的情况
+// console.log('orderId -----> ', orderId);
+checkout.getOrderDetail(orderId as string);
 </script>
 
 <template>
@@ -15,11 +24,14 @@
         <span class="icon iconfont icon-queren2"></span>
         <div class="tip">
           <p>订单提交成功！请尽快完成支付。</p>
-          <p>支付还剩 <span>24分59秒</span>, 超时后将取消订单</p>
+          <p>
+            支付还剩 <span>{{ checkout.orderDetail.countdown }}秒</span>,
+            超时后将取消订单
+          </p>
         </div>
         <div class="amount">
           <span>应付总额：</span>
-          <span>¥5673.00</span>
+          <span>¥{{ checkout.orderDetail.payMoney }}</span>
         </div>
       </div>
       <!-- 付款方式 -->

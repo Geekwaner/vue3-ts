@@ -1,5 +1,5 @@
 import { message } from '@/components/XtxUI';
-import type { CheckoutInfo, SubmitCheckout } from '@/types';
+import type { CheckoutInfo, OrderDetail, SubmitCheckout } from '@/types';
 import { http } from '@/utils/request';
 import { defineStore } from 'pinia';
 import { useCartStore } from './cart';
@@ -17,6 +17,7 @@ export const useCheckoutStore = defineStore('checkout', {
   state: () => {
     return {
       checkoutInfo: {} as CheckoutInfo,
+      orderDetail: {} as OrderDetail,
     };
   },
 
@@ -37,6 +38,12 @@ export const useCheckoutStore = defineStore('checkout', {
 
       // 替换成订单支付页(无需后退回来)，传递订单id
       router.replace('/member/pay?orderId=' + res.data.result.id);
+    },
+
+    // 获取订单详情
+    async getOrderDetail(orderId: string) {
+      const res = await http<OrderDetail>('get', '/member/order/' + orderId);
+      this.orderDetail = res.data.result;
     },
   },
 });
