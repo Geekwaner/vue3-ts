@@ -25,6 +25,12 @@ const index = ref(0);
 const currentAddress = computed(() => {
   return checkout.checkoutInfo.userAddresses?.[index.value] || {};
 });
+
+// 隐藏手机号中间4位
+const hideContact = (contact: string) => {
+  // 写法1，slice实现
+  return contact.slice(0, 3) + '****' + contact.slice(-4);
+};
 </script>
 
 <template>
@@ -45,7 +51,10 @@ const currentAddress = computed(() => {
                 <li>
                   <span>收&ensp;货&ensp;人：</span>{{ currentAddress.receiver }}
                 </li>
-                <li><span>联系方式：</span>{{ currentAddress.contact }}</li>
+                <li>
+                  <span>联系方式：</span
+                  >{{ hideContact(currentAddress.contact) }}
+                </li>
                 <li><span>收货地址：</span>{{ currentAddress.address }}</li>
               </ul>
               <div class="none" v-else>您需要先添加收货地址才可提交订单。</div>
