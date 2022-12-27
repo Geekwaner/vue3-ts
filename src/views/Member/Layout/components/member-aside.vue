@@ -66,6 +66,18 @@
       color: #666;
       position: relative;
 
+      /*
+      router-link-active         模糊匹配  url包含了to属性的话，就符合模糊匹配
+      router-link-exact-active   精确匹配  url全等于to属性，就符合精准匹配
+      应用场景：可以给菜单栏添加高亮样式
+      */
+      &.router-link-exact-active {
+        color: @xtxColor;
+        &:before {
+          display: block;
+        }
+      }
+
       &:hover {
         color: @xtxColor;
       }
