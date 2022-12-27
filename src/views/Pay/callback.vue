@@ -1,5 +1,11 @@
 <script setup lang="ts">
-//
+import { useCheckoutStore } from '@/store';
+import { useRoute } from 'vue-router';
+
+const checkout = useCheckoutStore();
+const route = useRoute();
+const { orderId, payResult } = route.query;
+checkout.getOrderDetail(orderId as string);
 </script>
 
 <template>
@@ -12,12 +18,17 @@
       </XtxBread>
       <!-- 支付结果 -->
       <div class="pay-result">
-        <span class="iconfont icon-queren2 green"></span>
-        <!-- <span class="iconfont icon-shanchu red" ></span> -->
-        <p class="tit">订单支付成功</p>
+        <span
+          class="iconfont icon-queren2 green"
+          v-if="payResult === 'true'"
+        ></span>
+        <span class="iconfont icon-shanchu red" v-else></span>
+        <p class="tit">订单支付{{ payResult === 'true' ? '成功' : '失败' }}</p>
         <p class="tip">我们将尽快为您发货，收货期间请保持手机畅通</p>
         <p>支付方式：<span>支付宝支付</span></p>
-        <p>支付金额：<span>¥1899.00</span></p>
+        <p>
+          支付金额：<span>¥{{ checkout.orderDetail.payMoney }}</span>
+        </p>
         <div class="btn">
           <XtxButton type="primary" style="margin-right: 20px"
             >查看订单</XtxButton
