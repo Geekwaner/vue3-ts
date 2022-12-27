@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div></div>
+    <input type="text" value="" />
+  </body>
+
+  <script>
+    const div = document.querySelector('div');
+    const input = document.querySelector('input');
+    input.addEventListener('input', (e) => {
+      data.name = e.target.value;
+    });
+
+    function reactive(obj) {
+      return new Proxy(obj, {
+        get(target, prop) {
+          console.log('我读取了数据', target, prop);
+          return target[prop];
+        },
+        set(target, prop, value) {
+          console.log('我修改了数据', target, prop, value);
+          target[prop] = value;
+          // 有什么需要绑定的业务，就卸载 set 钩子函数即可
+          div.innerHTML = JSON.stringify(target);
+          input.value = value;
+        },
+      });
+    }
+
+    const data = reactive({ name: 'zs', age: 20 });
+  </script>
+</html>
