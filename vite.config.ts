@@ -4,6 +4,8 @@ import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import vueJsx from '@vitejs/plugin-vue-jsx';
 
+import vueSetupExtend from 'vite-plugin-vue-setup-extend';
+
 // https://vitejs.dev/config/
 export default defineConfig({
   // QQ三方登录的回调uri为：http://www.corho.com:8080/#/login/callback
@@ -31,6 +33,7 @@ export default defineConfig({
       reactivityTransform: true,
     }),
     vueJsx(),
+    vueSetupExtend(),
   ],
   resolve: {
     alias: {

@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup lang="ts" name="app-top-nav">
 import { useMemberStore } from '@/store';
 import { toRefs } from 'vue';
 
@@ -7,6 +7,13 @@ const member = useMemberStore();
 const { profile } = toRefs(member);
 const { nickname, account, mobile } = toRefs(profile.value);
 </script>
+
+<!-- 可以多写一个标签(建议)，也可以使用插件 -->
+<!-- <script lang="ts">
+export default {
+  name: 'hahatest',
+};
+</script> -->
 
 <template>
   <nav class="app-topnav">
