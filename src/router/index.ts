@@ -1,4 +1,5 @@
-// import { useMemberStore } from '@/store';
+import { message } from '@/components/XtxUI';
+import { useMemberStore } from '@/store';
 import {
   createRouter,
   createWebHashHistory,
@@ -92,10 +93,10 @@ const router = createRouter({
 });
 
 router.beforeEach((to) => {
-  console.log('to -----> ', to);
-  // const member = useMemberStore();
-  if (to.path.startsWith('/member')) {
-    // message({ text: '请先登录~' });
+  const member = useMemberStore();
+  // 加入去的页面需要登录，并且当前还没有登录，那么就不能放行，而是跳转登录页
+  if (to.path.startsWith('/member') && !member.isLogin) {
+    message({ text: '请先登录~' });
     return `/login?target=${to.fullPath}`;
   }
 });

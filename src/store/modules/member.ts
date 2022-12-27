@@ -8,7 +8,7 @@ import { useCartStore } from './cart';
 
 // ❌常见错误，在非 setup 中使用 useRouter
 // const router = useRouter();
-console.log('router -----> ', router);
+// console.log('router -----> ', router);
 
 export const useMemberStore = defineStore('member', {
   // 开启本地数据持久化
