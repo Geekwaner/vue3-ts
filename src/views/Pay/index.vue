@@ -9,6 +9,14 @@ const { orderId } = route.query;
 // 值需要考虑正常的url传参，这里不建议做兼容，不考虑数组的情况
 // console.log('orderId -----> ', orderId);
 checkout.getOrderDetail(orderId as string);
+
+// 后端支付链接格式组成：(后端要求)
+// const payUrl = '后台服务基准地址+支付接口地址+订单ID+回跳地址'
+const baseURL = 'http://pcapi-xiaotuxian-front-devtest.itheima.net/';
+const target = encodeURIComponent(
+  'http://www.corho.com:8080/#/member/pay/callback'
+);
+const payUrl = `${baseURL}pay/aliPay?orderId=${orderId}&redirect=${target}`;
 </script>
 
 <template>
@@ -40,7 +48,7 @@ checkout.getOrderDetail(orderId as string);
         <div class="item">
           <p>支付平台</p>
           <a class="btn wx" href="javascript:;"></a>
-          <a class="btn alipay" href="javascript:;"></a>
+          <a class="btn alipay" :href="payUrl"></a>
         </div>
         <div class="item">
           <p>支付方式</p>
