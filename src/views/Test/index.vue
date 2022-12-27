@@ -7,9 +7,13 @@ onMounted(() => {
 });
 
 const DIVDOM = createVNode('div', {}, '我是div标签');
-const VDOM = createVNode('h1', { id: 'box', title: '虚拟title' }, [
-  DIVDOM,
-  DIVDOM,
+const VDOM = createVNode('h1', { id: 'box', title: '虚拟title' }, [DIVDOM]);
+
+const UL = createVNode('ul', {}, [
+  createVNode('li', {}, '111'),
+  createVNode('li', {}, '222'),
+  createVNode('li', {}, '333'),
+  createVNode('li', {}, '444'),
 ]);
 console.dir(VDOM);
 </script>
@@ -17,6 +21,7 @@ console.dir(VDOM);
 <template>
   <h1>Hello vue3 + ts👍</h1>
   <VDOM />
+  <UL></UL>
 </template>
 
 <style lang="less" scoped></style>
