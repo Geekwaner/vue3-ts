@@ -16,6 +16,11 @@ import AppHeaderSticky from './components/app-header-sticky.vue';
   <!-- 一定要放出路由出口，并且写在这里 -->
   <RouterView :key="$route.fullPath"></RouterView>
 
+  <!-- 不建议在顶层发送请求，使用 Suspense 解开 -->
+  <!-- <Suspense>
+    <RouterView :key="$route.fullPath"></RouterView>
+  </Suspense> -->
+
   <!-- 模块3：页面底部 -->
   <AppFooter />
 </template>
