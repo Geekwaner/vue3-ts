@@ -1,3 +1,4 @@
+// import { useMemberStore } from '@/store';
 import {
   createRouter,
   createWebHashHistory,
@@ -88,6 +89,15 @@ const router = createRouter({
     // console.log('savedPosition -----> ', savedPosition);
     return { top: 0, behavior: 'smooth' };
   },
+});
+
+router.beforeEach((to) => {
+  console.log('to -----> ', to);
+  // const member = useMemberStore();
+  if (to.path.startsWith('/member')) {
+    // message({ text: '请先登录~' });
+    return `/login?target=${to.fullPath}`;
+  }
 });
 
 export default router;
