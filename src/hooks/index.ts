@@ -1,5 +1,7 @@
 import { useIntersectionObserver } from '@vueuse/core';
-import { ref, onUnmounted } from 'vue';
+import dayjs from 'dayjs';
+import moment from 'moment';
+import { ref, onUnmounted, computed } from 'vue';
 
 // 🔔核心单词解释：
 //   useIntersectionObserver   检查元素是否进入可视区函数
@@ -44,6 +46,8 @@ export const useCounter = () => {
   const start = (time = 60) => {
     // 一开始时候，就判断，有定时器，就不要执行后面的代码了
     if (count.value) return;
+    //防止订单超时还开启定时器
+    if (time <= 0) return;
 
     count.value = time;
     timer = setInterval(() => {
@@ -57,10 +61,15 @@ export const useCounter = () => {
     }, 1000);
   };
 
+  const timeFormat = computed(() => {
+    // return moment.unix(count.value).format('mm分ss秒');
+    return dayjs.unix(count.value).format('mm分ss秒');
+  });
+
   // 优化：离开页面时，清理定时器
   onUnmounted(() => clearInterval(timer));
 
-  return { count, start };
+  return { count, start, timeFormat };
 };
 
 //  { useObserver, useCounter }

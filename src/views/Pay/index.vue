@@ -4,7 +4,7 @@ import { useCheckoutStore } from '@/store';
 import { useRoute } from 'vue-router';
 
 // 倒计时业务,保证在请求回来之后，开启倒计时
-const { count, start } = useCounter();
+const { count, start, timeFormat } = useCounter();
 
 const checkout = useCheckoutStore();
 // 在 setup 中可以使用 useRoute()、useRouter()
@@ -39,7 +39,8 @@ const payUrl = `${baseURL}pay/aliPay?orderId=${orderId}&redirect=${target}`;
         <div class="tip">
           <p>订单提交成功！请尽快完成支付。</p>
           <p>
-            支付还剩 <span>{{ count }}秒</span>, 超时后将取消订单
+            支付还剩 <span>{{ timeFormat }}</span
+            >, 超时后将取消订单
           </p>
         </div>
         <div class="amount">
