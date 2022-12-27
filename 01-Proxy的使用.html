@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+
+  <script>
+    // ref 底层也是使用 reactive 函数实现响应式原理的
+    // Proxy 实现响应式
+    const obj = new Proxy(
+      { name: 'zs', age: 20 },
+      {
+        // target代表目标，prop代表读取的属性
+        get(target, prop) {
+          console.log('我读取了数据', target, prop);
+          return target[prop];
+        },
+        set(target, prop, value) {
+          console.log('我修改了数据', target, prop, value);
+          target[prop] = value;
+        },
+      }
+    );
+    console.log('obj -----> ', obj);
+    // obj.name = 'll';
+    // console.log('obj -----> ', obj);
+  </script>
+</html>
