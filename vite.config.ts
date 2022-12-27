@@ -8,6 +8,8 @@ import vueSetupExtend from 'vite-plugin-vue-setup-extend';
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  // 修改打包的默认路径，改成'./'
+  base: './',
   // QQ三方登录的回调uri为：http://www.corho.com:8080/#/login/callback
   // vite 中配置： www.corho.com:8080
   // 记得还要修改电脑 hosts 文件
