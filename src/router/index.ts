@@ -93,6 +93,13 @@ const router = createRouter({
 });
 
 router.beforeEach((to) => {
+  /*
+  router@4里面，建议使用 return 来导航
+  1. return false 取消当前的导航
+  2. return undefined 或返回 true，则导航是有效的，放行
+  3. return '/login' 或者 {name:'Login'},重定向到其他页面
+  注意：如果参数里面，写了 next，就一定要保证调用了next(),否则页面不会跳转
+  */
   const member = useMemberStore();
   // 加入去的页面需要登录，并且当前还没有登录，那么就不能放行，而是跳转登录页
   if (to.path.startsWith('/member') && !member.isLogin) {
