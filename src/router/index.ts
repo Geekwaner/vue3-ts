@@ -38,6 +38,10 @@ const routes: RouteRecordRaw[] = [
         path: '/member/pay/callback',
         component: () => import('@/views/Pay/callback.vue'),
       },
+      {
+        path: '/member',
+        component: () => import('@/views/Member/Layout/index.vue'),
+      },
     ],
   },
   {
